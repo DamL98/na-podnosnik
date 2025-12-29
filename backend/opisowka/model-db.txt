@@ -1,0 +1,71 @@
+Service
+- id
+- name
+- description
+- basePriceMin
+- basePriceMax
+- durationMinutes
+- isActive
+
+ServiceVariant
+- id
+- serviceId
+- name
+- priceModifier
+- durationModifier
+
+ServiceFieldDefinition
+- id
+- serviceId
+- fieldKey
+- type (text, number, select, boolean)
+- required
+- options (JSON)
+
+Vehicle
+- id
+- brand
+- model
+- year
+- plate
+- vin
+- mileage
+
+Reservation
+- id
+- publicToken
+- status
+- startAt
+- endAt
+- estimatedPriceMin
+- estimatedPriceMax
+- customerName
+- customerPhone
+- customerEmail
+
+ReservationService
+- reservationId
+- serviceId
+- variantId
+- selectedFields (JSONB)
+
+AvailabilityRule
+- id
+- dayOfWeek
+- startTime
+- endTime
+
+AvailabilityException
+- id
+- date
+- startTime
+- endTime
+- isClosed
+
+AuditLog
+- id
+- entity
+- entityId
+- action
+- actor
+- createdAt

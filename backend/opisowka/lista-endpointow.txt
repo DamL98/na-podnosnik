@@ -1,0 +1,45 @@
+Formularz Wycena
+    - KATALOG USŁUG
+        GET /api/services
+    - Dane pojazdu
+
+    - pola dynamiczne
+        GET /api/services/:id/fields
+
+    - wstępna wycena
+        POST /api/estimate
+
+        
+REZERWACJE
+    - Wolne terminy
+        GET /api/availability?date=2025-01-15&duration=90
+
+
+    - Utw. Rezerwacji
+        POST /api/reservations
+
+    - potwierdzenie
+        GET /api/reservations/:id
+
+    - zmiana / anulowanie
+        PATCH /api/reservations/:token
+
+ADMIN
+    - Rezerwacje
+
+    GET /api/admin/reservations?from=2025-01-01&to=2025-01-31 (jakas przykladowa data)
+    PATCH /api/admin/reservations/:id
+
+
+    - Usługi i cennik
+
+    GET    /api/admin/services
+    POST   /api/admin/services
+    PATCH  /api/admin/services/:id
+    DELETE /api/admin/services/:id
+
+    - Dostępność
+
+    GET  /api/admin/availability
+    POST /api/admin/availability/rules
+    POST /api/admin/availability/exceptions

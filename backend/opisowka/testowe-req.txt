@@ -1,0 +1,84 @@
+US-A1 – katalog usług
+GET /api/services
+[
+  {
+    "id": "srv1",
+    "name": "Wymiana opon",
+    "description": "...",
+    "priceRange": { "min": 100, "max": 180 },
+    "variants": [...]
+  }
+]
+
+
+
+US-A3 – pola dynamiczne
+GET /api/services/:id/fields
+[
+  { "key": "tireSize", "type": "text", "required": true },
+  { "key": "balancing", "type": "boolean" }
+]
+
+
+
+US-A4 – wstępna wycena
+POST /api/estimate
+{
+  "services": [
+    {
+      "serviceId": "srv1",
+      "variantId": "v1",
+      "fields": { "balancing": true }
+    }
+  ],
+  "vehicle": { "brand": "BMW", "year": 2018 }
+}
+{
+  "price": { "min": 150, "max": 220 },
+  "durationMinutes": 90,
+  "isEstimated": true
+}
+
+
+
+US-B1 – wolne sloty
+GET /api/availability?date=2025-01-15&duration=90
+[
+  { "start": "10:00", "end": "11:30" },
+  { "start": "13:00", "end": "14:30" }
+]
+
+
+
+US-B2 – utworzenie rezerwacji
+POST /api/reservations
+{
+  "slot": { "start": "2025-01-15T10:00" },
+  "customer": {
+    "name": "Jan Kowalski",
+    "phone": "600123456",
+    "email": "jan@test.pl"
+  },
+  "vehicle": {...},
+  "services": [...]
+}
+{
+  "reservationId": "R-2025-00012",
+  "token": "secure-public-token"
+}
+
+
+
+US-B3 – potwierdzenie
+GET /api/reservations/:id
+
+
+
+US-B4 – zmiana / anulowanie
+PATCH /api/reservations/:token
+
+{ "action": "cancel" }
+    lub
+{ "newSlot": "2025-01-16T14:00" }
+
+
