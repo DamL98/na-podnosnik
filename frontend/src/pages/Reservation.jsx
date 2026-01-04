@@ -1,19 +1,41 @@
 import { useState } from "react";
 
+/**
+ * Usługi zgodne z tabelą `uslugi`
+ * id = INT (jak w DB)
+ * typ = H (godzinowa) | FIX (stała)
+ */
 const services = [
-  { id: "lift", name: "Podnośnik", price: 50 },
-  { id: "tools", name: "Zestaw narzędzi", price: 30 },
-  { id: "diagnostics", name: "Diagnostyka OBD", price: 40 },
-  { id: "oil", name: "Wymiana oleju", price: 60 },
-  { id: "consultation", name: "Pomoc mechanika", price: 100 },
+  { id: 1, nazwa: "Podnośnik", typ: "H", stawka: 50 },
+  { id: 2, nazwa: "Zestaw narzędzi", typ: "H", stawka: 30 },
+  { id: 3, nazwa: "Diagnostyka OBD", typ: "FIX", stawka: 40 },
+  { id: 4, nazwa: "Pomoc mechanika", typ: "H", stawka: 100 },
 ];
 
+/**
+ * Oblicz liczbę godzin między datami
+ */
+function calculateHours(startAt, endAt) {
+  const start = new Date(startAt);
+  const end = new Date(endAt);
+
+  const diffMs = end - start;
+  const diffHours = diffMs / (1000 * 60 * 60);
+
+  return Math.max(1, Math.ceil(diffHours));
+}
+
 export default function Reservation() {
-  const [selected, setSelected] = useState([]);
+  const [selected, setSelected] = useState([]); // tablica ID usług
+
   const [form, setForm] = useState({
-    name: "",
+    podnosnikId: 1,
+    firstName: "",
+    lastName: "",
     email: "",
-    phone: "",
+    paymentMethod: "karta",
+    startAt: "",
+    endAt: "",
   });
 
   function toggleService(id) {
@@ -28,74 +50,179 @@ export default function Reservation() {
     setForm({ ...form, [e.target.name]: e.target.value });
   }
 
-  const total = services
-    .filter((s) => selected.includes(s.id))
-    .reduce((sum, s) => sum + s.price, 0);
-
+  /**
+   * FINALNY SUBMIT
+   */
   function handleSubmit(e) {
     e.preventDefault();
 
-    if (!form.name || !form.email || !form.phone) {
-      alert("Uzupełnij wszystkie dane kontaktowe.");
+    // 🔒 Walidacja podstawowa
+    if (
+      !form.firstName ||
+      !form.lastName ||
+      !form.email ||
+      !form.startAt ||
+      !form.endAt
+    ) {
+      alert("Uzupełnij wszystkie wymagane pola.");
       return;
     }
 
-    console.log({
-      client: form,
-      services: selected,
-      estimatedCost: total,
-    });
+    // ⏱️ liczba godzin rezerwacji
+    const liczbaGodzin = calculateHours(
+      form.startAt,
+      form.endAt
+    );
 
-    alert("Rezerwacja wysłana (demo)");
+    // 🧾 SNAPSHOT USŁUG → uslugi_json
+    const uslugi_json = services
+      .filter((s) => selected.includes(s.id))
+      .map((s) => {
+        const ilosc = s.typ === "H" ? liczbaGodzin : 1;
+
+        return {
+          uslugaId: s.id,
+          nazwa: s.nazwa,
+          typ: s.typ,
+          stawka: s.stawka,
+          ilosc,
+          koszt: s.stawka * ilosc,
+        };
+      });
+
+    // 💰 suma końcowa (z JSON-a, nie „na oko”)
+    const total = uslugi_json.reduce(
+      (sum, u) => sum + u.koszt,
+      0
+    );
+
+    // 📦 PAYLOAD 1:1 POD POSTGRES / PRISMA
+    const payload = {
+      podnosnikId: form.podnosnikId,
+
+      imie: form.firstName,
+      nazwisko: form.lastName,
+      email: form.email,
+
+      sposob_platnosci: form.paymentMethod,
+
+      od_ts: new Date(form.startAt).toISOString(),
+      do_ts: new Date(form.endAt).toISOString(),
+
+      uslugi_json,
+    };
+
+    console.log("Wysyłam do backendu:", payload);
+    console.log("Suma:", total, "zł");
+
+    alert("Rezerwacja przygotowana (demo)");
   }
+
+  // 💰 podsumowanie na żywo (frontend UX)
+  const previewTotal = services
+    .filter((s) => selected.includes(s.id))
+    .reduce((sum, s) => sum + s.stawka, 0);
 
   return (
     <section className="section">
       <h1>Rezerwacja warsztatu</h1>
 
       <form onSubmit={handleSubmit}>
-        <h2>Dane kontaktowe</h2>
+        <h2>Dane klienta</h2>
 
         <input
-          name="name"
-          placeholder="Imię i nazwisko"
-          value={form.name}
+          name="firstName"
+          placeholder="Imię"
+          value={form.firstName}
           onChange={handleChange}
           required
         />
 
         <input
-          name="email"
+          name="lastName"
+          placeholder="Nazwisko"
+          value={form.lastName}
+          onChange={handleChange}
+          required
+        />
+
+        <input
           type="email"
+          name="email"
           placeholder="Adres email"
           value={form.email}
           onChange={handleChange}
           required
         />
 
-        <input
-          name="phone"
-          placeholder="Numer telefonu"
-          value={form.phone}
-          onChange={handleChange}
-          required
-        />
+        <h2>Termin rezerwacji</h2>
+
+        <label>
+          Od:
+          <input
+            type="datetime-local"
+            name="startAt"
+            value={form.startAt}
+            onChange={handleChange}
+            required
+          />
+        </label>
+
+        <label>
+          Do:
+          <input
+            type="datetime-local"
+            name="endAt"
+            value={form.endAt}
+            onChange={handleChange}
+            required
+          />
+        </label>
+
+        <h2>Płatność</h2>
+
+        <label>
+          <input
+            type="radio"
+            name="paymentMethod"
+            value="karta"
+            checked={form.paymentMethod === "karta"}
+            onChange={handleChange}
+          />
+          Karta
+        </label>
+
+        <label>
+          <input
+            type="radio"
+            name="paymentMethod"
+            value="gotowka"
+            checked={form.paymentMethod === "gotowka"}
+            onChange={handleChange}
+          />
+          Gotówka
+        </label>
 
         <h2>Wybierz usługi</h2>
 
-        {services.map((service) => (
-          <label key={service.id}>
-            <input
-              type="checkbox"
-              checked={selected.includes(service.id)}
-              onChange={() => toggleService(service.id)}
-            />
-            {service.name} – {service.price} zł
-          </label>
-        ))}
+        <div className="services-list">
+          {services.map((service) => (
+            <label key={service.id} className="service-option">
+              <input
+                type="checkbox"
+                checked={selected.includes(service.id)}
+                onChange={() => toggleService(service.id)}
+              />
+              <span className="service-name">{service.nazwa}</span>
+              <span className="service-price">
+                {service.stawka} zł
+              </span>
+            </label>
+          ))}
+        </div>
 
         <div className="summary">
-          Łączny koszt: {total} zł
+          Szacowany koszt (bez czasu): {previewTotal} zł
         </div>
 
         <button style={{ marginTop: "24px" }}>

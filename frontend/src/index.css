@@ -356,6 +356,44 @@ input[type="checkbox"] {
 /* END BUTTONS */
 
 
+/* REZERWACJE -> USLUGI */
+.services-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.service-option {
+  display: grid;
+  grid-template-columns: 24px 1fr auto;
+  align-items: center;          /* KLUCZ */
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+}
+
+.service-option:hover {
+  background: #f5f7fa;
+}
+
+.service-option input[type="checkbox"] {
+  margin: 0;                    /* KLUCZ */
+  width: 18px;
+  height: 18px;
+}
+
+.service-name {
+  font-weight: 500;
+}
+
+.service-price {
+  font-weight: 600;
+  color: var(--primary);
+}
+
 
 /* MOBILE */
 @media (max-width: 700px) {
