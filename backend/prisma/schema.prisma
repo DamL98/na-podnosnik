@@ -1,8 +1,36 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
-generator client {
-  provider = "prisma-client-js"
+model podnosnik {
+  id      Int     @id @default(autoincrement())
+  nazwa   String  @unique
+  aktywny Boolean @default(true)
+
+  rezerwacje rezerwacje[]
+}
+
+model rezerwacje {
+  id               BigInt   @id @default(autoincrement())
+
+  podnosnikid      Int
+  podnosnik        podnosnik @relation(fields: [podnosnikid], references: [id])
+
+  imie             String
+  nazwisko         String
+  email            String
+
+  sposob_platnosci String
+
+  od_ts            DateTime @db.Timestamptz
+  do_ts            DateTime @db.Timestamptz
+
+  uslugi_json      Json     @default("[]")
+
+  @@index([podnosnikid])
 }

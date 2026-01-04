@@ -1,4 +1,4 @@
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, Link , useLocation } from "react-router-dom";
 import { useState } from 'react'
 import './App.css'
 
@@ -8,13 +8,31 @@ import Footer from "./components/Footer";
 
 function App() {
   const [count, setCount] = useState(0)
+  const location = useLocation();
+
+  const isReservationPage = location.pathname === "/reservation";
+
+  function scrollToTop() {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }
+
 
   return (
     <>
       <header className="nav">
         <div className="nav-inner">
-          <div className="logo">
+          {/* TODO --- LOGO */}
+          <div>
+            <Link 
+              to="/" 
+              className="logo"
+              onClick={scrollToTop}
+            >
             Na <span> Podnośnik</span>
+            </Link>
           </div>
 
           <nav className="nav-links">
@@ -23,9 +41,12 @@ function App() {
             <a href="#opinions">Opinie</a>
             <a href="#faq">FAQ</a>
 
-            <Link to="/reservation">
-              <button className="nav-cta">Rezerwuj</button>
-            </Link>
+            {/* CTA tylko gdy NIE jesteśmy na /reservation */}
+            {!isReservationPage && (
+              <Link to="/reservation">
+                <button className="nav-cta">Rezerwuj</button>
+              </Link>
+            )}
           </nav>
         </div>
       </header>

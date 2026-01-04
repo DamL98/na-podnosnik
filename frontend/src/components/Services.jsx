@@ -30,44 +30,30 @@
 // ];
 
 export const services = [
-  {
-    id: 1,
-    nazwa: "Podnośnik",
-    typ: "H",
-    stawka: 50,
-  },
-  {
-    id: 2,
-    nazwa: "Zestaw narzędzi",
-    typ: "H",
-    stawka: 30,
-  },
-  {
-    id: 3,
-    nazwa: "Diagnostyka OBD",
-    typ: "FIX",
-    stawka: 40,
-  },
-  {
-    id: 4,
-    nazwa: "Pomoc mechanika",
-    typ: "H",
-    stawka: 100,
-  },
+  { id: 1, nazwa: "Podnośnik", typ: "H", stawka: 50, icon: "🛠️" },
+  { id: 2, nazwa: "Zestaw narzędzi", typ: "H", stawka: 30, icon: "🔧" },
+  { id: 3, nazwa: "Diagnostyka OBD", typ: "FIX", stawka: 40, icon: "💻" },
+  { id: 4, nazwa: "Pomoc mechanika", typ: "H", stawka: 100, icon: "👨‍🔧" },
 ];
 
 export default function Services() {
   return (
     <section id="services" className="section">
-      <h2>Nasze usługi</h2>
+      <h2 >Nasze usługi</h2>
 
       <div className="cards">
         {services.map((service) => (
-          <div key={service.title} className="card">
+          <div key={service.id} className="card">
             <div className="card-icon">{service.icon}</div>
-            <h3>{service.title}</h3>
-            <p>{service.description}</p>
-            <strong>{service.price}</strong>
+            <h3>{service.nazwa}</h3>
+
+            <p>
+              Rozliczenie: {service.typ === "H" ? "godzinowo" : "jednorazowo"}
+            </p>
+
+            <strong>
+              {service.stawka} zł {service.typ === "H" ? "/ godz." : ""}
+            </strong>
           </div>
         ))}
       </div>

@@ -28,6 +28,12 @@ function calculateHours(startAt, endAt) {
 export default function Reservation() {
   const [selected, setSelected] = useState([]); // tablica ID usług
 
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(false);
+
+  const [availability, setAvailability] = useState(null);
+
   const [form, setForm] = useState({
     podnosnikId: 1,
     firstName: "",
@@ -47,16 +53,29 @@ export default function Reservation() {
   }
 
   function handleChange(e) {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const updated = { ...form, [e.target.name]: e.target.value };
+    setForm(updated);
+
+    if (
+      (e.target.name === "startAt" ||
+        e.target.name === "endAt") &&
+      updated.startAt &&
+      updated.endAt
+    ) {
+      checkAvailability(updated.startAt, updated.endAt);
+    }
   }
 
   /**
-   * FINALNY SUBMIT
+   * Submit formularza
    */
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
 
-    // 🔒 Walidacja podstawowa
+    setError(null);
+    setSuccess(false);
+
+    // 🔒 Walidacja
     if (
       !form.firstName ||
       !form.lastName ||
@@ -64,61 +83,106 @@ export default function Reservation() {
       !form.startAt ||
       !form.endAt
     ) {
-      alert("Uzupełnij wszystkie wymagane pola.");
+      setError("Uzupełnij wszystkie wymagane pola.");
       return;
     }
 
-    // ⏱️ liczba godzin rezerwacji
-    const liczbaGodzin = calculateHours(
-      form.startAt,
-      form.endAt
-    );
+    try {
+      setLoading(true);
 
-    // 🧾 SNAPSHOT USŁUG → uslugi_json
-    const uslugi_json = services
-      .filter((s) => selected.includes(s.id))
-      .map((s) => {
-        const ilosc = s.typ === "H" ? liczbaGodzin : 1;
+      // ⏱️ liczba godzin
+      const liczbaGodzin = calculateHours(
+        form.startAt,
+        form.endAt
+      );
 
-        return {
-          uslugaId: s.id,
-          nazwa: s.nazwa,
-          typ: s.typ,
-          stawka: s.stawka,
-          ilosc,
-          koszt: s.stawka * ilosc,
-        };
-      });
+      // 🧾 uslugi_json
+      const uslugi_json = services
+        .filter((s) => selected.includes(s.id))
+        .map((s) => {
+          const ilosc = s.typ === "H" ? liczbaGodzin : 1;
 
-    // 💰 suma końcowa (z JSON-a, nie „na oko”)
-    const total = uslugi_json.reduce(
-      (sum, u) => sum + u.koszt,
-      0
-    );
+          return {
+            uslugaId: s.id,
+            nazwa: s.nazwa,
+            typ: s.typ,
+            stawka: s.stawka,
+            ilosc,
+            koszt: s.stawka * ilosc,
+          };
+        });
 
-    // 📦 PAYLOAD 1:1 POD POSTGRES / PRISMA
-    const payload = {
-      podnosnikId: form.podnosnikId,
+      if (uslugi_json.length === 0) {
+        setError("Wybierz przynajmniej jedną usługę.");
+        return;
+      }
 
-      imie: form.firstName,
-      nazwisko: form.lastName,
-      email: form.email,
+      const payload = {
+        podnosnikId: form.podnosnikId,
 
-      sposob_platnosci: form.paymentMethod,
+        imie: form.firstName,
+        nazwisko: form.lastName,
+        email: form.email,
 
-      od_ts: new Date(form.startAt).toISOString(),
-      do_ts: new Date(form.endAt).toISOString(),
+        sposob_platnosci: form.paymentMethod,
 
-      uslugi_json,
-    };
+        od_ts: new Date(form.startAt).toISOString(),
+        do_ts: new Date(form.endAt).toISOString(),
 
-    console.log("Wysyłam do backendu:", payload);
-    console.log("Suma:", total, "zł");
+        uslugi_json,
+      };
 
-    alert("Rezerwacja przygotowana (demo)");
+      // 🌐 FETCH DO BACKENDU
+      const response = await fetch(
+        "http://localhost:3001/api/rezerwacje",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Błąd zapisu rezerwacji");
+      }
+
+      setSuccess(true);
+    } catch (err) {
+      console.error(err);
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
   }
 
-  // 💰 podsumowanie na żywo (frontend UX)
+  async function checkAvailability(startAt, endAt) {
+    if (!startAt || !endAt) return;
+
+    try {
+      const params = new URLSearchParams({
+        podnosnikId: form.podnosnikId,
+        od: new Date(startAt).toISOString(),
+        do: new Date(endAt).toISOString(),
+      });
+
+      const res = await fetch(
+        `http://localhost:3001/api/availability?${params}`
+      );
+
+      const data = await res.json();
+
+      setAvailability(data.available);
+    } catch (err) {
+      console.error(err);
+      setAvailability(null);
+    }
+  }
+
+  // 💰 podsumowanie real time
   const previewTotal = services
     .filter((s) => selected.includes(s.id))
     .reduce((sum, s) => sum + s.stawka, 0);
@@ -179,29 +243,44 @@ export default function Reservation() {
           />
         </label>
 
+        {availability === true && (
+          <p style={{ color: "green" }}>
+            ✅ Termin jest dostępny
+          </p>
+        )}
+
+        {availability === false && (
+          <p style={{ color: "red" }}>
+            ❌ Termin jest zajęty
+          </p>
+        )}
+
+
         <h2>Płatność</h2>
+        <div className="services-list">
+          <label className="service-option">
+            <input
+              type="radio"
+              name="paymentMethod"
+              value="karta"
+              checked={form.paymentMethod === "karta"}
+              onChange={handleChange}
+            />
+            Karta
+          </label>
 
-        <label>
-          <input
-            type="radio"
-            name="paymentMethod"
-            value="karta"
-            checked={form.paymentMethod === "karta"}
-            onChange={handleChange}
-          />
-          Karta
-        </label>
+          <label className="service-option">
+            <input
+              type="radio"
+              name="paymentMethod"
+              value="gotowka"
+              checked={form.paymentMethod === "gotowka"}
+              onChange={handleChange}
+            />
+            Gotówka
+          </label>
+        </div>
 
-        <label>
-          <input
-            type="radio"
-            name="paymentMethod"
-            value="gotowka"
-            checked={form.paymentMethod === "gotowka"}
-            onChange={handleChange}
-          />
-          Gotówka
-        </label>
 
         <h2>Wybierz usługi</h2>
 
@@ -224,10 +303,28 @@ export default function Reservation() {
         <div className="summary">
           Szacowany koszt (bez czasu): {previewTotal} zł
         </div>
+        
 
-        <button style={{ marginTop: "24px" }}>
-          Wyślij rezerwację
+        {error && (
+        <p style={{ color: "red", marginTop: "12px" }}>
+          {error}
+        </p>
+        )}
+
+        {success && (
+          <p style={{ color: "green", marginTop: "12px" }}>
+            Rezerwacja zapisana poprawnie ✔
+          </p>
+        )}
+
+
+        <button
+          style={{ marginTop: "24px" }}
+          disabled={loading || availability === false}
+        >
+          {loading ? "Wysyłanie..." : "Wyślij rezerwację"}
         </button>
+
       </form>
     </section>
   );

@@ -71,7 +71,7 @@ export default function Home() {
         <div className="step-number">3</div>
         <h3 className="step-title">Napraw auto</h3>
       </div>
-      <p className="step-desc">
+      <p id="services" className="step-desc">
         Przyjeżdżasz, korzystasz z warsztatu i naprawiasz auto w swoim tempie.
       </p>
     </div>

@@ -47,15 +47,17 @@ body {
 }
 
 .nav-inner {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 38px;
 }
 
 .logo {
+  /* display: flex; */
   font-size: 22px;
   font-weight: 800;
 }

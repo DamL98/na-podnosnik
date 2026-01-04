@@ -24,13 +24,13 @@ export default function Footer() {
           <p>Niedziela: nieczynne</p>
         </div>
 
-        <div>
+        {/* <div>
           <h4>Rezerwacje</h4>
           <p>Zarezerwuj termin online</p>
           <a href="/reservation">
             <button>Rezerwuj</button>
           </a>
-        </div>
+        </div> */}
       </div>
 
       <div className="footer-bottom">
