@@ -22,3 +22,12 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+postgres-data/
+build/
+.env
+.env.local
+.env.*.local
+.env.test.local
+.env.production.local
+.idea/
