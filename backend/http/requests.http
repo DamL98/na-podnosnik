@@ -1,0 +1,62 @@
+@baseUrl = http://localhost:3001
+
+###
+# Health check
+GET {{baseUrl}}/
+
+###
+# Sprawdzenie dostępności – BRAK rezerwacji (powinno być available: true)
+GET {{baseUrl}}/api/availability?podnosnikId=1&od=2026-01-10T10:00:00Z&do=2026-01-10T12:00:00Z
+
+###
+# Sprawdzenie dostępności – inny zakres (również true)
+GET {{baseUrl}}/api/availability?podnosnikId=1&od=2026-01-10T13:00:00Z&do=2026-01-10T15:00:00Z
+
+###
+# Sprawdzenie dostępności – BŁĘDNE PARAMETRY (400)
+GET {{baseUrl}}/api/availability?podnosnikId=1&od=2026-01-10T12:00:00Z
+
+###
+# Sprawdzenie dostępności – NIEPRAWIDŁOWY ZAKRES (400)
+GET {{baseUrl}}/api/availability?podnosnikId=1&od=2026-01-10T14:00:00Z&do=2026-01-10T12:00:00Z
+
+###
+# Utworzenie rezerwacji (POST)  --> sposob_platnosci: karta lub gotowka
+POST {{baseUrl}}/api/rezerwacje
+Content-Type: application/json
+
+{
+  "podnosnikId": 1,
+  "imie": "Jan3",
+  "nazwisko": "Kowalski3",
+  "email": "jan.kowalski3@test.pl",
+  "sposob_platnosci": "karta",
+  "od_ts": "2026-01-10T13:00:00Z",
+  "do_ts": "2026-01-10T14:00:00Z",
+  "uslugi_json": [
+    { "id": 1, "nazwa": "Mycie" },
+    { "id": 2, "nazwa": "Serwis" }
+  ]
+}
+
+###
+# Sprawdzenie dostępności – PO REZERWACJI (powinno być available: false)
+GET {{baseUrl}}/api/availability?podnosnikId=1&od=2026-01-10T10:30:00Z&do=2026-01-10T11:30:00Z
+
+###
+# Próba rezerwacji KOLIZJA (409)
+POST {{baseUrl}}/api/rezerwacje
+Content-Type: application/json
+
+{
+  "podnosnikId": 1,
+  "imie": "Anna",
+  "nazwisko": "Nowak",
+  "email": "anna.nowak@test.pl",
+  "sposob_platnosci": "gotowka",
+  "od_ts": "2026-01-10T11:00:00Z",
+  "do_ts": "2026-01-10T13:00:00Z",
+  "uslugi_json": [
+    { "id": 3, "nazwa": "Diagnostyka" }
+  ]
+}

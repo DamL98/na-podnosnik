@@ -1,7 +1,10 @@
+require('dotenv').config();
 const express = require("express");
 const cors = require("cors");
+const prisma = require('./../shared/db/prisma');
 
-const reservationsRouter = require("./routes/reservations");
+// ROUTES
+const reservationsRouter = require("./routes/reservation");
 const availabilityRouter = require("./routes/availability");
 
 // APP BUILD
@@ -14,9 +17,8 @@ app.use(express.json());
 app.use("/api/rezerwacje", reservationsRouter);
 app.use("/api/availability", availabilityRouter);
 
-
-app.get("/health", (req, res) => {
-  res.json({ status: "ok" });
+app.get("/", (req, res) => {
+  res.json({ status: "ok dziala" });
 });
 
 // APP INFO / START
