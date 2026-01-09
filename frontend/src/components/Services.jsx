@@ -66,30 +66,61 @@ export default function Services() {
 
 
   return (
-    
+
     <section id="services" className="section">
       <h2 >Nasze usługi</h2>
 
       <div className="cards">
         {services.map((service) => (
 
-          <div 
-            key={service.id} 
-            className="card-services"
-            onClick={() => setActiveService(service)}
-            >
+          // <div 
+          //   key={service.id} 
+          //   className="card-services"
+          //   onClick={() => setActiveService(service)}
+          //   >
             
-            <div className="card-icon">{service.icon}</div>
-            <h3>{service.nazwa}</h3>
+          //   <div className="card-icon">{service.icon}</div>
+          //   <h3>{service.nazwa}</h3>
 
-            <p>
-              Rozliczenie: {service.typ === "H" ? "godzinowo" : "jednorazowo"}
-            </p>
+          //   <p>
+          //     Rozliczenie: {service.typ === "H" ? "godzinowo" : "jednorazowo"}
+          //   </p>
 
-            <strong>
-              {service.stawka} zł {service.typ === "H" ? "/ godz." : ""}
-            </strong>
+          //   <strong>
+          //     {service.stawka} zł {service.typ === "H" ? "/ godz." : ""}
+          //   </strong>
 
+          // </div>
+
+          <div
+            key={service.id}
+            className="service-flip"
+            onClick={() => setActiveService(service)}
+          >
+            <div className="service-flip-inner">
+
+              {/* FRONT */}
+              <div className="service-face service-front">
+                <div className="card-icon">{service.icon}</div>
+                <h3>{service.nazwa}</h3>
+                <p>
+                  {service.typ === "H" ? "Rozliczenie godzinowe" : "Opłata jednorazowa"}
+                </p>
+                <strong>
+                  {service.stawka} zł {service.typ === "H" && "/ godz."}
+                </strong>
+              </div>
+
+              {/* BACK */}
+              <div className="service-face service-back">
+                <h4>{service.nazwa}</h4>
+                <p>{service.opis}</p>
+                <span className="service-hint">
+                  Kliknij aby zobaczyć szczegóły
+                </span>
+              </div>
+
+            </div>
           </div>
 
         ))}
