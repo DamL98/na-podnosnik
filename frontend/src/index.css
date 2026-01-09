@@ -40,6 +40,9 @@ h3 {
   padding: 32px 16px;
 }
 
+
+
+/* ################################################################################ */
 /* Nawigacja */
 .nav {
   background: var(--card);
@@ -103,7 +106,6 @@ h3 {
   letter-spacing: -0.5px;
 }
 
-
 .nav-links {
   display: flex;
   align-items: center;
@@ -124,7 +126,15 @@ h3 {
   padding: 10px 18px;
   font-size: 15px;
 }
+/* ################################################################################ */
 
+
+
+
+
+
+
+/* ################################################################################ */
 /* Hero */
 .hero {
   display: grid;
@@ -177,7 +187,13 @@ h3 {
   filter: drop-shadow(0 20px 40px rgba(0,0,0,0.2));
   opacity: 0.95;
 }
+/* ################################################################################ */
 
+
+
+
+
+/* ################################################################################ */
 /* Sekcje */
 .section {
   background: var(--card);
@@ -198,8 +214,14 @@ h3 {
   max-width: 500px;
   margin: 0 auto;
 }
+/* ################################################################################ */
 
 
+
+
+
+/* ################################################################################ */
+/* Process Steps */
 .process-steps {
   display: flex;
   flex-direction: column;
@@ -256,10 +278,14 @@ h3 {
   margin: 0;
   color: #455a64;
 }
+/* ################################################################################ */
 
 
 
-/* Przyciski */
+
+
+/* ################################################################################ */
+/* Rezerwacja -> buttony */
 button {
   background-color: var(--primary);
   color: white;
@@ -303,7 +329,11 @@ input[type="checkbox"] {
   font-size: 18px;
   font-weight: bold;
 }
+/* ################################################################################ */
 
+
+/* ################################################################################ */
+/* Footer */
 .footer {
   background: #1c1c1c;
   color: #eeeeee;
@@ -338,8 +368,12 @@ input[type="checkbox"] {
   font-size: 14px;
   opacity: 0.7;
 }
+/* ################################################################################ */
 
 
+
+
+/* ################################################################################ */
 /* Cards */
 .cards {
   display: grid;
@@ -383,11 +417,14 @@ input[type="checkbox"] {
   transition: transform 0.4s ease, box-shadow 0.2s ease, background 0.4s ease;
   cursor: pointer;
 }
+/* ################################################################################ */
 
 
 
 
-/* Flipper card */
+
+/* ################################################################################ */
+/* FLIPPER Card */
 .service-flip {
   perspective: 1200px;
   cursor: pointer;
@@ -415,6 +452,7 @@ input[type="checkbox"] {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   background: var(--card);
   box-shadow: 0 6px 18px rgba(0,0,0,0.06);
 }
@@ -427,7 +465,7 @@ input[type="checkbox"] {
 /* BACK */
 .service-back {
   transform: rotateY(180deg);
-  background: linear-gradient(135deg, #1e88e5, #42a5f5);
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
   color: white;
 }
 
@@ -440,7 +478,14 @@ input[type="checkbox"] {
   font-size: 14px;
   opacity: 0.8;
 }
+/* ################################################################################ */
 
+
+
+
+
+
+/* ################################################################################ */
 /* Gallery */
 .gallery {
   display: grid;
@@ -455,9 +500,15 @@ input[type="checkbox"] {
   object-fit: cover;
   border-radius: 12px;
 }
+/* ################################################################################ */
 
 
 
+
+
+
+
+/* ################################################################################ */
 /* Buttony */
 .btn-primary {
   background: var(--primary);
@@ -482,25 +533,17 @@ input[type="checkbox"] {
 .btn-secondary:hover {
   background: rgba(30, 136, 229, 0.1);
 }
-
-/* END BUTTONS */
-
+/* ################################################################################ */
 
 
 
 
-/* REZERWACJE -> USLUGI */
-.services-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-top: 16px;
-}
 
 
-
-
+/* ################################################################################ */
 /* Formularz rezerwacji */
+/* REZERWACJE -> USLUGI */
+
 .reservation-hero {
   position: relative;
   z-index: 1;
@@ -520,6 +563,12 @@ input[type="checkbox"] {
   opacity: 0.9;
 }
 
+.services-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
+}
 
 .service-option {
   display: grid;
@@ -554,13 +603,10 @@ input[type="checkbox"] {
   font-weight: 500;
 }
 
-
 .service-price {
   font-weight: 600;
   color: var(--primary);
 }
-
-
 
 .reservation-layout {
   display: grid;
@@ -592,9 +638,7 @@ input[type="checkbox"] {
 
 
 
-
-
-/* WALIDACJA INPUTÓW */
+/* Rezerwacje -> walidacja inputow */
 input.valid,
 select.valid,
 textarea.valid {
@@ -620,7 +664,7 @@ textarea:focus {
   box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.12);
 }
 
-/* stan inputow */
+/* Rezerwacja -> stan inputow */
 .valid-text { color: #2e7d32; }
 .invalid-text { color: #c62828; }
 
@@ -630,7 +674,8 @@ textarea:focus {
   padding-top: 120px;
 }
 
-/* TŁO – zdjęcie pod formularzem */
+
+/* Rezerwacje tło / zdjęcie pod form */
 .reservation-bg {
   position: absolute;
   top: 0;
@@ -643,7 +688,7 @@ textarea:focus {
   z-index: 0;
 }
 
-/* Gradient wygaszający */
+/* Rezerwacje fotka gradient w dol */
 .reservation-bg::after {
   content: "";
   position: absolute;
@@ -657,7 +702,7 @@ textarea:focus {
   );
 }
 
-/* Formularz nad zdjęciem */
+/* Form nad zdjęciem */
 .reservation-card {
   position: relative;
   z-index: 2;
@@ -750,12 +795,18 @@ textarea:focus {
   }
 }
 
+/* END FORMULARZ -> REZERWACJI */
+/* ################################################################################ */
 
 
 
 
 
 
+
+/* ################################################################################ */
+                                      /* DODATKI */
+/* ################################################################################ */
  /* Modal popup od uslug */
  .modal-backdrop {
   position: fixed;
@@ -789,13 +840,23 @@ textarea:focus {
   margin-bottom: 8px;
 }
 
+
+
 @keyframes modalIn {
   from { transform: scale(0.9); opacity: 0; }
   to { transform: scale(1); opacity: 1; }
 }
+/* ################################################################################ */
 
 
-/* MOBILE */
+
+
+
+
+/* ################################################################################ */
+/* RWD MOBILE */
+/* ################################################################################ */
+
 @media (max-width: 700px) {
   .process-step {
     grid-template-columns: 1fr;
