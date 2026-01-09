@@ -368,6 +368,23 @@ input[type="checkbox"] {
   margin-bottom: 12px;
 }
 
+.card-services {
+  background: var(--card);
+  padding: 24px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-services:hover {
+  transform: translateY(-4px);
+  background: #6cb2fcff;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  transition: transform 0.4s ease, box-shadow 0.2s ease, background 0.4s ease;
+}
+
+
+
 /* Gallery */
 .gallery {
   display: grid;
@@ -675,6 +692,50 @@ textarea:focus {
     transform: translateY(0);
     opacity: 1;
   }
+}
+
+
+
+
+
+
+
+ /* Modal popup od uslug */
+ .modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.modal {
+  background: white;
+  padding: 32px;
+  border-radius: 16px;
+  max-width: 500px;
+  width: 90%;
+  animation: modalIn 0.25s ease;
+}
+
+.modal h2 {
+  margin-top: 0;
+}
+
+.modal ul {
+  padding-left: 20px;
+}
+
+.modal li {
+  margin-bottom: 8px;
+}
+
+@keyframes modalIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
 }
 
 
