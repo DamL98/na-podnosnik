@@ -10,10 +10,20 @@ export default function Home() {
     <>
       {/* HERO */}
       <section className="hero">
+
+        
         <div className="hero-content">
-          <h1>
-            Samoobsługowy <span>warsztat</span> samochodowy
-          </h1>
+
+            <h1>
+              Samoobsługowy <span>warsztat</span> samochodowy
+            </h1>
+
+            <img
+              src="/gallery/logo3.png"
+              alt="Na Podnośnik"
+              className="hero-brand-logo"
+            />
+
 
           <p>
             Wynajmij profesjonalne stanowisko, narzędzia i podnośnik.
@@ -31,10 +41,10 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="hero-visual">
+        {/* <div className="hero-visual">
           🏗️
-        </div>
-    </section>
+        </div> */}
+      </section>
 
 
 

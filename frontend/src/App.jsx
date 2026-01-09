@@ -25,15 +25,16 @@ function App() {
       <header className="nav">
         <div className="nav-inner">
           {/* TODO --- LOGO */}
-          <div>
+
             <Link 
               to="/" 
               className="logo"
               onClick={scrollToTop}
             >
-            Na <span> Podnośnik</span>
+            <img src="/gallery/logo3.png" alt="na podnosnik" className="logo-img"/>
+            {/* <span>Na Podnośnik</span> */}
             </Link>
-          </div>
+
 
           <nav className="nav-links">
             <a href="#services">Usługi</a>
@@ -42,11 +43,11 @@ function App() {
             <a href="#faq">FAQ</a>
 
             {/* CTA tylko gdy NIE jesteśmy na /reservation */}
-            {!isReservationPage && (
+            {/* {!isReservationPage && (
               <Link to="/reservation">
                 <button className="nav-cta">Rezerwuj</button>
               </Link>
-            )}
+            )} */}
           </nav>
         </div>
       </header>

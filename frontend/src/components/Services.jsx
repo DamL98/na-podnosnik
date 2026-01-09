@@ -37,13 +37,16 @@ export const services = [
 ];
 
 export default function Services() {
+
   return (
     <section id="services" className="section">
       <h2 >Nasze usługi</h2>
 
       <div className="cards">
         {services.map((service) => (
+
           <div key={service.id} className="card">
+            
             <div className="card-icon">{service.icon}</div>
             <h3>{service.nazwa}</h3>
 
@@ -55,7 +58,9 @@ export default function Services() {
               {service.stawka} zł {service.typ === "H" ? "/ godz." : ""}
             </strong>
           </div>
+
         ))}
+
       </div>
     </section>
   );

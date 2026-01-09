@@ -2,9 +2,13 @@
   --bg: #f5f7fa;
   --primary: #1e88e5;
   --primary-dark: #1565c0;
+  --background-green: #97ffa0ff;
   --text: #263238;
   --card: #ffffff;
   --border: #e0e0e0;
+
+  --font-body: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-heading: "Poppins", system-ui, sans-serif;
 }
 
 * {
@@ -13,15 +17,25 @@
 
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, Ubuntu, sans-serif;
+  /* font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, Ubuntu, sans-serif; */
+  font-family: var(--font-body);
   background-color: var(--bg);
   color: var(--text);
 }
 
+h1, h2, h3, .logo span {
+  font-family: var(--font-heading);
+  letter-spacing: -0.5px;
+}
+
+h3 {
+  font-weight: 600;
+}
+
 /* Layout */
 .container {
-  max-width: 900px;
+  max-width: 1500px;
   margin: 0 auto;
   padding: 32px 16px;
 }
@@ -47,35 +61,59 @@ body {
 }
 
 .nav-inner {
+  height: 120px;
+  padding: 0 32px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 38px;
 }
 
 .logo {
-  /* display: flex; */
+  display: flex;
+  align-items: center;
+  gap: 12px;
   font-size: 22px;
   font-weight: 800;
+  text-decoration: none;
+  color: var(--text);
 }
 
 .logo span {
   color: var(--primary);
 }
 
+.logo-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: var(--text);
+}
+
+.logo-img {
+  height: 64px;       /* 👈 główny rozmiar */
+  /* max-height: 100%; */
+  width: auto;
+  object-fit: contain;
+}
+
+.logo span {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 25px;
 }
 
 .nav-links a {
   text-decoration: none;
   color: var(--text);
-  font-weight: 500;
+  font-weight: 400;
 }
 
 .nav-links a:hover {
@@ -90,9 +128,12 @@ body {
 /* Hero */
 .hero {
   display: grid;
-  grid-template-columns: 1.2fr 1fr;
+  grid-template-columns: 1fr;
   gap: 40px;
   align-items: center;
+  justify-items: center;
+  justify-content: center;
+  text-align: center;
   margin-bottom: 64px;
 }
 
@@ -110,10 +151,13 @@ body {
   font-size: 18px;
   max-width: 520px;
   margin-bottom: 32px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .hero-actions {
   display: flex;
+  justify-content: center;
   gap: 16px;
 }
 
@@ -125,7 +169,14 @@ body {
   opacity: 0.15;
 }
 
-
+.hero-brand-logo {
+  margin: 48px auto 24px;
+  height: 250px;
+  width: auto;
+  display: block;
+  filter: drop-shadow(0 20px 40px rgba(0,0,0,0.2));
+  opacity: 0.95;
+}
 
 /* Sekcje */
 .section {
@@ -139,16 +190,16 @@ body {
 /* Section header */
 .section-header {
   margin-bottom: 32px;
-  text-align: center; /* KLUCZ */
+  text-align: center;
 }
 
 .section-subtitle {
   color: #546e7a;
   max-width: 500px;
-  margin: 0 auto; /* KLUCZ */
+  margin: 0 auto;
 }
 
-/* Process steps */
+
 .process-steps {
   display: flex;
   flex-direction: column;
@@ -188,6 +239,7 @@ body {
 .step-title {
   margin: 0;
   font-size: 18px;
+  font-weight: 400;
 }
 
 .step-desc {
@@ -306,7 +358,9 @@ input[type="checkbox"] {
 
 .card:hover {
   transform: translateY(-4px);
+  background: #ffed2dff;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  transition: transform 0.4s ease, box-shadow 0.2s ease, background 0.4s ease;
 }
 
 .card-icon {
@@ -335,6 +389,7 @@ input[type="checkbox"] {
 .btn-primary {
   background: var(--primary);
   color: white;
+  font-weight: 600;
 }
 
 .btn-primary:hover {
@@ -358,6 +413,9 @@ input[type="checkbox"] {
 /* END BUTTONS */
 
 
+
+
+
 /* REZERWACJE -> USLUGI */
 .services-list {
   display: flex;
@@ -366,23 +424,55 @@ input[type="checkbox"] {
   margin-top: 16px;
 }
 
+
+
+
+/* Formularz rezerwacji */
+.reservation-hero {
+  position: relative;
+  z-index: 1;
+  padding: 60px 32px 120px;
+  text-align: center;
+  color: white;
+}
+
+.reservation-hero h1 {
+  font-size: 48px;
+  margin-bottom: 12px;
+  text-shadow: 0 4px 16px rgba(0,0,0,0.4);
+}
+
+.reservation-hero p {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+
 .service-option {
   display: grid;
   grid-template-columns: 24px 1fr auto;
-  align-items: center;          /* KLUCZ */
+  align-items: center;
   gap: 12px;
   padding: 12px 16px;
   border-radius: 8px;
   border: 1px solid var(--border);
   cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .service-option:hover {
   background: #f5f7fa;
 }
 
+/* ZAZNACZONA USŁUGA */
+.service-option.valid {
+  background: #e8f5e9;
+  border-color: #66bb6a;
+}
+
+
 .service-option input[type="checkbox"] {
-  margin: 0;                    /* KLUCZ */
+  margin: 0;
   width: 18px;
   height: 18px;
 }
@@ -391,9 +481,200 @@ input[type="checkbox"] {
   font-weight: 500;
 }
 
+
 .service-price {
   font-weight: 600;
   color: var(--primary);
+}
+
+
+
+.reservation-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+}
+
+.reservation-image {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.reservation-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.image-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 24px;
+  background: linear-gradient(transparent, rgba(0,0,0,0.1));
+  color: white;
+}
+
+
+
+
+
+/* WALIDACJA INPUTÓW */
+input.valid,
+select.valid,
+textarea.valid {
+  border-color: #66bb6a !important;
+  background: #e8f5e9 !important;
+  box-shadow: 0 0 0 3px rgba(102, 187, 106, 0.15);
+}
+
+input.invalid,
+select.invalid,
+textarea.invalid {
+  border-color: #ef5350 !important;
+  background: #ffebee !important;
+  box-shadow: 0 0 0 3px rgba(239, 83, 80, 0.12);
+}
+
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.12);
+}
+
+/* stan inputow */
+.valid-text { color: #2e7d32; }
+.invalid-text { color: #c62828; }
+
+
+.reservation-wrapper {
+  position: relative;
+  padding-top: 120px;
+}
+
+/* TŁO – zdjęcie pod formularzem */
+.reservation-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 520px;
+  background-image: url("/gallery/workshop-bg.jpg");
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+}
+
+/* Gradient wygaszający */
+.reservation-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(245,247,250,0) 60%,
+    rgba(245,247,250,0.4) 90%,
+    rgba(245,247,250,0.7) 90%,
+    rgba(245,247,250,0.8) 90%
+  );
+}
+
+/* Formularz nad zdjęciem */
+.reservation-card {
+  position: relative;
+  z-index: 2;
+  /* margin-top: 5px; */
+  background: white;
+  /* opacity: 0.75; */
+}
+
+
+/* Formularz submit button */
+.submit-btn {
+  width: 100%;
+  margin-top: 32px;
+  padding: 16px 24px;
+  font-size: 18px;
+  font-weight: 700;
+  border-radius: 12px;
+  border: none;
+  color: white;
+  background: linear-gradient(135deg, #1e88e5, #42a5f5);
+  box-shadow: 0 10px 30px rgba(30, 136, 229, 0.35);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.submit-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 40px rgba(30, 136, 229, 0.45);
+}
+
+.submit-btn:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 8px 24px rgba(30, 136, 229, 0.35);
+}
+
+.submit-btn:disabled {
+  background: #b0bec5;
+  box-shadow: none;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+
+.hero-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+/* Logo w HERO */
+.hero-logo {
+  height: 360px;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 20px rgba(0,0,0,0.12));
+}
+
+/* Nagłówek */
+.hero-content h1 {
+  font-size: 52px;
+  line-height: 1.1;
+  margin: 0;
+}
+
+/* Suckes wyslania Forma na backend */
+.toast {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  background: #2e7d32;
+  color: white;
+  padding: 16px 24px;
+  border-radius: 12px;
+  font-weight: 600;
+  box-shadow: 0 10px 30px rgba(46, 125, 50, 0.4);
+  animation: toast-in 0.4s ease;
+  z-index: 9999;
+}
+
+@keyframes toast-in {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 
