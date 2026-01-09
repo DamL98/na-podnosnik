@@ -52,7 +52,7 @@ function App() {
               </>
             )}
 
-            {/* CTA rezerwacji – tylko jeśli NIE jesteśmy na /reservation */}
+            {/* CTA rezerwacji – tylko jeśli NIE jest sie na /reservation */}
             {!isReservationPage && (
               <Link to="/reservation">
                 <button className="nav-cta">Rezerwuj</button>
