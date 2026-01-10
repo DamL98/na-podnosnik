@@ -31,12 +31,12 @@ export const services = [
     icon: "🔧",
     opis: "Kompletny zestaw narzędzi warsztatowych.",
     wskazowki: [
-      "Dostępne klucze: Oczkowe, nasadkowe, imbusy",
-      "Grzechotki wraz z wszystkimi rozmiarami nasadek",
-      "Klucze specjalistyczne: dynamometryczny, udarowy oraz do filtrów oleju",
-      "Elektonarzędzia: wkrętarka, szlifierka kątowa, wyrzynarka",
-      "Specjalne przyrządy ułatwiające prace takie jak: ściągacz sprężyn, zestaw do cofania tłoczków hamulcowych",
-      "Oraz wiele innych potrzebnych do wykonania pracy przy Twoim pojeździe!"
+      "Dostępne klucze: oczkowe, nasadowe, imbusowe",
+      "Grzechotki wraz z pełnym zestawem nasadek",
+      "Klucze specjalistyczne: dynamometryczne, udarowe oraz do filtrów oleju",
+      "Elektronarzędzia: wkrętarka, szlifierka kątowa, wyrzynarka",
+      "Specjalistyczne przyrządy ułatwiające prace, takie jak: ściągacz sprężyn czy zestaw do cofania tłoczków hamulcowych",
+      "Oraz wiele innych narzędzi niezbędnych do pracy przy Twoim pojeździe!"
     ],
   },
   {
@@ -47,11 +47,11 @@ export const services = [
     icon: "💻",
     opis: "Odczyt i kasowanie błędów z komputera auta.",
     wskazowki: [
-      "Dostępne są urządzenia diagnostyki komputerowej przez OBD2",
-      "Wiele interface pasujących to wszystkich modeli  samochodu",
-      "Możliwość sprawdzenia/usunięcia błędu w Twoim pojeździe!",
-      "Doposaż swoje auto w nowe funkcje dzięki możliwości programowania!",
-      "Przedsprzedażowe sprawdzenie komputerowe pojazdu"
+      "Dostępne są urządzenia do diagnostyki komputerowej przez OBD2",
+      "Wiele interfejsów pasujących do większości modeli samochodów",
+      "Możliwość sprawdzenia oraz usunięcia błędów w Twoim pojeździe",
+      "Doposaż swoje auto w nowe funkcje dzięki możliwości programowania",
+      "Przedsprzedażowe sprawdzenie pojazdu za pomocą diagnostyki komputerowej"
     ],
   },
   {
@@ -62,10 +62,10 @@ export const services = [
     icon: "👨‍🔧",
     opis: "Wsparcie profesjonalnego mechanika.",
     wskazowki: [
-      "Gdy tylko będziesz potrzebował pomocy zawołaj naszego mechanika!",
-      "Podpowie Ci jak coś naprawić",
-      "Sprawdzi czy wszystko jest w porządku",
-      "Naprawi pojazd za Ciebie! Gdy tylko będziesz tego potrzebował"
+      "Gdy tylko będziesz potrzebować pomocy, zawołaj naszego mechanika!",
+      "Podpowie Ci, jak coś naprawić",
+      "Sprawdzi, czy wszystko jest w porządku",
+      "Naprawi pojazd za Ciebie, gdy tylko będziesz tego potrzebować"
     ],
   },
 ];
