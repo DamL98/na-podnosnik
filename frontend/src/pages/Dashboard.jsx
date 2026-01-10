@@ -1,27 +1,42 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../auth/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export default function Dashboard() {
-  const { user } = useAuth();
+  const navigate = useNavigate();
+
+  const { user, loading: authLoading } = useAuth();
   const [list, setList] = useState([]);
   const [loading, setLoading] = useState(true);
 
+
   useEffect(() => {
-    fetch("http://localhost:3001/api/me/rezerwacje", {
-      headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
-    })
-      .then(res => res.json())
-      .then(data => {
-        setList(data);
-        setLoading(false);
-      });
-  }, []);
+    if (!authLoading && !user) {
+      navigate("/");
+    }
+  }, [user, authLoading]);
+
+
+  useEffect(() => {
+  if (!user) return; // jeszcze nie wiemy kto to
+
+  fetch("http://localhost:3001/api/me/rezerwacje", {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`
+    }
+  })
+    .then(res => res.json())
+    .then(data => {
+      setList(data);
+      setLoading(false);
+    });
+}, [user]);
 
   return (
     <section className="section dashboard">
       <h1>Moje rezerwacje</h1>
       <p className="dashboard-sub">
-        Zalogowany jako <b>{user.email}</b>
+        {/* Zalogowany jako <b>{user.email}</b> */}
       </p>
 
       {loading && <p>Ładowanie...</p>}

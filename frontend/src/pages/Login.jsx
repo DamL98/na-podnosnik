@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, replace } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
 
 export default function Login() {
@@ -21,7 +21,8 @@ export default function Login() {
     try {
       setLoading(true);
       await login(form.email, form.password);
-      navigate("/"); // albo /reservation
+
+      navigate("/dashboard", { replace: true }); // albo /reservation
     } catch (err) {
       setError(err.message || "Błąd logowania");
     } finally {

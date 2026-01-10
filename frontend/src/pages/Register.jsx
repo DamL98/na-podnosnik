@@ -8,17 +8,21 @@ export default function Register() {
 
   const pending = JSON.parse(localStorage.getItem("pendingReservation") || "null");
 
-  const [email] = useState(pending?.email || "");
+  const [email, setEmail] = useState(pending?.email || "");
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    if (!pending) {
-      navigate("/");
-    }
-  }, []);
+
+
+  // useEffect(() => {
+  //   if (!pending) {
+  //     navigate("/");
+  //   }
+  // }, []);
+
+  const fromReservation = Boolean(pending);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -33,19 +37,40 @@ export default function Register() {
       setLoading(true);
 
       await register(email, password);
-      const token = localStorage.getItem("token");
+      // const token = localStorage.getItem("token");
 
-      const res = await fetch("http://localhost:3001/api/rezerwacje", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`
-        },
-        body: JSON.stringify(pending)
-      });
+      // const res = await fetch("http://localhost:3001/api/rezerwacje", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //     Authorization: `Bearer ${token}`
+      //   },
+      //   body: JSON.stringify(pending)
+      // });
 
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error);
+      if (fromReservation) {
+        const token = localStorage.getItem("token");
+
+        const res = await fetch("http://localhost:3001/api/rezerwacje", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+          },
+          body: JSON.stringify(pending)
+        });
+
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error);
+
+        localStorage.removeItem("pendingReservation");
+        navigate("/dashboard");
+    } else {
+      navigate("/");
+    }
+
+      // const data = await res.json();
+      // if (!res.ok) throw new Error(data.error);
 
       localStorage.removeItem("pendingReservation");
       navigate("/dashboard");
@@ -58,11 +83,22 @@ export default function Register() {
 
   return (
     <section className="section">
-      <h1>Dokończ rejestrację</h1>
-      <p>Tworzymy konto dla: <b>{email}</b></p>
+      <h1>{fromReservation ? "Dokończ rejestrację" : "Załóż konto"}</h1>
+
+      {fromReservation && (
+        <p>Tworzymy konto dla: <b>{email}</b></p>
+      )}
 
       <form onSubmit={handleSubmit}>
-        <input value={email} disabled />
+        {/* <input value={email} disabled /> */}
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          disabled={fromReservation}
+          onChange={e => setEmail(e.target.value)}
+          required
+        />
 
         <input
           type="password"
