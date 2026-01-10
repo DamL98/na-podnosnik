@@ -41,12 +41,23 @@ router.put("/", auth, async (req, res) => {
  * lista rezerwacji usera
  */
 router.get("/rezerwacje", auth, async (req, res) => {
-  const rezerwacje = await prisma.rezerwacje.findMany({
-    where: { userId: req.user.id },
-    orderBy: { od_ts: "desc" }
-  });
+  try {
+    const rezerwacje = await prisma.rezerwacje.findMany({
+      where: { userId: req.user.id },
+      orderBy: { od_ts: "desc" }
+    });
 
-  res.json(rezerwacje);
+    // 🔥 konwersja BigInt → string
+    const safe = rezerwacje.map(r => ({
+      ...r,
+      id: r.id.toString()
+    }));
+
+    res.json(safe);
+  } catch (err) {
+    console.error("Błąd /me/rezerwacje:", err);
+    res.status(500).json({ error: "Błąd pobierania rezerwacji" });
+  }
 });
 
 module.exports = router;

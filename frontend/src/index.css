@@ -851,9 +851,34 @@ textarea:focus {
 
 
 
+.payment-method{
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
 
+.stanowisko-option.valid {
+  background: #e8f5e9;
+  border-color: #66bb6a;
+}
 
-
+.stanowisko-option{
+    display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
 
 
 
@@ -861,24 +886,43 @@ textarea:focus {
 /* ################################################################################ */
 /* 
 Rejestracja / login - menu uzytkownika w navie
+/* Navbar user dropdown */
 .nav-user-menu {
   position: relative;
+  display: inline-block;
 }
 
+.nav-user {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--primary);
+   padding: 8px 12px;
+}
+
+/* Dropdown */
 .nav-dropdown {
   position: absolute;
-  top: 120%;
+  top: 100%;        /* dokładnie pod "Profil" */
   right: 0;
+
   background: white;
   border-radius: 12px;
   box-shadow: 0 12px 30px rgba(0,0,0,0.15);
-  padding: 12px;
-  display: none;
-  min-width: 200px;
+  padding: 8px;
+
+  min-width: 220px;
+  z-index: 200;
+
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-10px);
+  transition: 0.2s ease;
 }
 
 .nav-user-menu:hover .nav-dropdown {
-  display: block;
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
 }
 
 .nav-dropdown a,
@@ -886,17 +930,23 @@ Rejestracja / login - menu uzytkownika w navie
   display: block;
   width: 100%;
   text-align: left;
-  padding: 10px;
+  padding: 10px 14px;
   border-radius: 8px;
   border: none;
   background: none;
   cursor: pointer;
+  font-size: 14px;
 }
 
 .nav-dropdown a:hover,
 .nav-dropdown button:hover {
   background: #f5f7fa;
-} */
+}
+
+.nav-dropdown button {
+  color: #c62828;
+  font-weight: 600;
+}
 /* ################################################################################ */
 
 

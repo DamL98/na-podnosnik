@@ -12,6 +12,7 @@ const { createToken } = require("../auth/authenticationService");
 const reservationsRouter = require("./routes/reservation");
 const availabilityRouter = require("./routes/availability");
 const meRouter = require("./routes/me");
+const podnosnikiRouter = require("./routes/podnosniki");
 
 // APP BUILD
 const app = express();
@@ -23,6 +24,9 @@ app.use(express.json());
 app.use("/api/rezerwacje", reservationsRouter);
 app.use("/api/availability", availabilityRouter);
 app.use("/api/me", meRouter);
+app.use("/api/podnosniki", podnosnikiRouter);
+
+
 
 // Rejestracja i logowanie endpointy
 app.post("/api/auth/register", async (req, res) => {
@@ -69,8 +73,7 @@ app.post("/api/auth/register", async (req, res) => {
 });
 
 
-
-app.post("/auth/login", async (req, res) => {
+app.post("/api/auth/login", async (req, res) => {
   const { email, password } = req.body;
 
   const user = await prisma.user.findUnique({ where: { email } });
@@ -89,28 +92,48 @@ app.post("/auth/login", async (req, res) => {
     },
   });
 
-  res.cookie("auth", token, { httpOnly: true });
-  res.json({ user });
+  //res.cookie("auth", token, { httpOnly: true });
+  res.json({ user, token });
 });
 
 
-app.get("/auth/me", async (req, res) => {
-  const token = req.cookies.auth;
-  if (!token) return res.json(null);
+app.get("/api/auth/me", async (req, res) => {
+  try {
+      const auth = req.headers.authorization;
+      if (!auth) return res.status(401).json({ error: "Brak tokena" });
 
-  const session = await prisma.session.findUnique({
-    where: { token },
-    include: { user: true },
-  });
+      const token = auth.replace("Bearer ", "");
 
-  if (!session || session.expiresAt < new Date()) {
-    return res.json(null);
-  }
+      const session = await prisma.session.findUnique({
+        where: { token },
+        include: { user: true },
+      });
 
-  res.json(session.user);
+      if (!session || session.expiresAt < new Date()) {
+        return res.status(401).json({ error: "Sesja wygasła" });
+      }
+
+      res.json({ user: session.user });
+    } catch (err) {
+      res.status(500).json({ error: "Błąd serwera" });
+    }
+
+
+
+  //const token = req.cookies.auth;
+  // if (!token) return res.json(null);
+
+  // const session = await prisma.session.findUnique({
+  //   where: { token },
+  //   include: { user: true },
+  // });
+
+  // if (!session || session.expiresAt < new Date()) {
+  //   return res.json(null);
+  // }
+
+  // res.json(session.user);
 });
-
-
 
 
 

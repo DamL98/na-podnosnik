@@ -59,25 +59,26 @@ function App() {
 
 
             {user ? (
-  <div className="nav-user-menu">
-    <div className="nav-user">
-      👤 {user.email}
-    </div>
+              <div className="nav-user-menu">
+                <div className="nav-user">
+                  Profil ▾
+                </div>
 
-    <div className="nav-dropdown">
-      <Link to="/dashboard">Moje rezerwacje</Link>
-      <Link to="/profile">Profil</Link>
-      <button onClick={logout}>Wyloguj</button>
-    </div>
-  </div>
-) : (
-  <>
-    <Link to="/login">Zaloguj</Link>
-    <Link to="/register">
-      <button className="nav-cta">Załóż konto</button>
-    </Link>
-  </>
-)}
+                <div className="nav-dropdown">
+                  <Link to="/reservation">Zarezerwuj</Link>
+                  <Link to="/dashboard">Moje rezerwacje</Link>
+                  <Link to="/profile">Profil</Link>
+                  <button onClick={logout}>Wyloguj</button>
+                </div>
+              </div>
+            ) : (
+              <>
+                <Link to="/login">Zaloguj</Link>
+                <Link to="/register">
+                  <button className="nav-cta">Załóż konto</button>
+                </Link>
+              </>
+            )}
 
 
 

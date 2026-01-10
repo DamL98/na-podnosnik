@@ -1,34 +1,56 @@
-import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
 
 export default function Register() {
   const navigate = useNavigate();
   const { register } = useAuth();
 
-  const [form, setForm] = useState({ email: "", password: "", password2: "" });
+  const pending = JSON.parse(localStorage.getItem("pendingReservation") || "null");
+
+  const [email] = useState(pending?.email || "");
+  const [password, setPassword] = useState("");
+  const [password2, setPassword2] = useState("");
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  function handleChange(e) {
-    setForm((p) => ({ ...p, [e.target.name]: e.target.value }));
-  }
+  useEffect(() => {
+    if (!pending) {
+      navigate("/");
+    }
+  }, []);
 
   async function handleSubmit(e) {
     e.preventDefault();
     setError(null);
 
-    if (form.password !== form.password2) {
-      setError("Hasła nie są takie same.");
+    if (password !== password2) {
+      setError("Hasła nie są takie same");
       return;
     }
 
     try {
       setLoading(true);
-      await register(form.email, form.password);
-      navigate("/");
+
+      await register(email, password);
+      const token = localStorage.getItem("token");
+
+      const res = await fetch("http://localhost:3001/api/rezerwacje", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify(pending)
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error);
+
+      localStorage.removeItem("pendingReservation");
+      navigate("/dashboard");
     } catch (err) {
-      setError(err.response?.data?.error || "Błąd rejestracji");
+      setError(err.message || "Błąd rejestracji");
     } finally {
       setLoading(false);
     }
@@ -36,48 +58,34 @@ export default function Register() {
 
   return (
     <section className="section">
-      <h1>Załóż konto</h1>
+      <h1>Dokończ rejestrację</h1>
+      <p>Tworzymy konto dla: <b>{email}</b></p>
 
       <form onSubmit={handleSubmit}>
-        <input
-          name="email"
-          type="email"
-          placeholder="Email"
-          value={form.email}
-          onChange={handleChange}
-          required
-        />
+        <input value={email} disabled />
 
         <input
-          name="password"
           type="password"
           placeholder="Hasło"
-          value={form.password}
-          onChange={handleChange}
+          value={password}
+          onChange={e => setPassword(e.target.value)}
           required
         />
 
         <input
-          name="password2"
           type="password"
           placeholder="Powtórz hasło"
-          value={form.password2}
-          onChange={handleChange}
+          value={password2}
+          onChange={e => setPassword2(e.target.value)}
           required
         />
 
         {error && <p className="invalid-text">{error}</p>}
 
         <button className="submit-btn" disabled={loading}>
-          {loading ? "Tworzenie konta..." : "Zarejestruj"}
+          {loading ? "Tworzenie konta..." : "Załóż konto i zapisz rezerwację"}
         </button>
-
-        {error && <p className="invalid-text">{error}</p>}
       </form>
-
-      <p style={{ marginTop: 16 }}>
-        Masz już konto? <Link to="/login">Zaloguj się</Link>
-      </p>
     </section>
   );
 }

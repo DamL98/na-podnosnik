@@ -1,13 +1,15 @@
 const express = require("express");
 const prisma = require("../../shared/db/prisma");
 const auth = require("../middlewares/auth");
+const authOptional = require("../middlewares/authOptional");
+
 
 const router = express.Router();
 
 /**
  * POST /api/rezerwacje
  */
-router.post("/", auth, async (req, res) => {
+router.post("/", authOptional, async (req, res) => {
   try {
     const {
       podnosnikId,
@@ -21,19 +23,29 @@ router.post("/", auth, async (req, res) => {
     } = req.body;
 
     /* ===== WALIDACJA ===== */
-    if (
-      !podnosnikId ||
-      !imie ||
-      !nazwisko ||
-      !email ||
-      !od_ts ||
-      !do_ts ||
-      !Array.isArray(uslugi_json)
-    ) {
-      return res.status(400).json({
-        error: "Brak wymaganych danych",
-      });
-    }
+    // if (
+    //   !podnosnikId ||
+    //   !imie ||
+    //   !nazwisko ||
+    //   !email ||
+    //   !od_ts ||
+    //   !do_ts ||
+    //   !Array.isArray(uslugi_json)
+    // ) {
+    //   return res.status(400).json({
+    //     error: "Brak wymaganych danych",
+    //   });
+    // }
+
+    // if (!podnosnikId || !od_ts || !do_ts || !Array.isArray(uslugi_json)) {
+    //   return res.status(400).json({ error: "Brak wymaganych danych" });
+    // }
+
+    // if (!user && (!imie || !nazwisko || !email)) {
+    //   return res.status(400).json({
+    //     error: "Imię, nazwisko i email wymagane dla gościa",
+    //   });
+    // }
 
     const start = new Date(od_ts);
     const end = new Date(do_ts);
@@ -63,22 +75,91 @@ router.post("/", auth, async (req, res) => {
       });
     }
 
-    /* ===== ZAPIS ===== */
-    const user = req.user || null; // 👈 z middleware auth
+    const podnosnik = await prisma.podnosnik.findUnique({
+      where: { id: podnosnikId }
+    });
+
+    if (!podnosnik) {
+      return res.status(400).json({ error: "Nieprawidłowy podnośnik" });
+    }
+
+    const user = req.user;
+
+    if (!podnosnikId || !od_ts || !do_ts || !Array.isArray(uslugi_json)) {
+      return res.status(400).json({ error: "Brak wymaganych danych" });
+    }
+
+    if (!user && (!imie || !nazwisko || !email)) {
+      return res.status(400).json({
+        error: "Imię, nazwisko i email wymagane dla gościa"
+      });
+    }
+
+    // if (
+    //   !podnosnikId ||
+    //   !od_ts ||
+    //   !do_ts ||
+    //   !Array.isArray(uslugi_json) ||
+    //   !sposob_platnosci
+    // ) {
+    //   return res.status(400).json({ error: "Brak wymaganych danych" });
+    // }
+
+    // if (!user && (!imie || !nazwisko)) {
+    //   return res.status(400).json({
+    //     error: "Imię i nazwisko wymagane dla gościa"
+    //   });
+    // }
+
 
     const reservation = await prisma.rezerwacje.create({
       data: {
         podnosnikid: podnosnikId,
-        imie,
-        nazwisko,
-        email,
+        userId: user ? user.id : null,
+
+        imie: user?.firstName || imie,
+        nazwisko: user?.lastName || nazwisko,
+        email: user?.email || email,
+
         sposob_platnosci,
         od_ts: start,
         do_ts: end,
         uslugi_json,
-        userId: user?.id || null,   // 👈 TO JEST KLUCZ
       },
     });
+
+
+
+
+    /* ===== ZAPIS ===== */
+    // const user = req.user
+
+    // const reservation = await prisma.rezerwacje.create({
+    //   data: {
+    //     podnosnikid: podnosnikId,
+
+    //     userId: user.id,
+    //     imie: user.name || imie,
+    //     nazwisko: user.username || nazwisko || "",
+    //     email: user.email,
+
+    //     sposob_platnosci,
+    //     od_ts: start,
+    //     do_ts: end,
+    //     uslugi_json,
+
+    //     // userId: user?.id || null,
+    //   },
+    // });
+
+
+
+
+    // if (!user.name || !user.username) {
+    //   return res.status(400).json({
+    //     error: "Uzupełnij imię i nazwisko w profilu"
+    //   });
+    // }
 
     return res.status(201).json({
       success: true,

@@ -40,12 +40,12 @@ model rezerwacje {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  username  String?  @unique
-  password  String?
-  name      String?
-  image     String?
+  id       String  @id @default(uuid())
+  email    String  @unique
+  username String? @unique
+  password String?
+  name     String?
+  image    String?
 
   firstName String?
   lastName  String?
@@ -53,8 +53,8 @@ model User {
 
   createdAt DateTime @default(now())
 
-  accounts Account[]
-  sessions Session[]
+  accounts   Account[]
+  sessions   Session[]
   rezerwacje rezerwacje[]
 }
 
