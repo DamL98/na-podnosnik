@@ -22,7 +22,7 @@ export default function Reservation() {
     firstName: "",
     lastName: "",
     email: "",
-    paymentMethod: "karta",
+    paymentMethod: "",
     startAt: "",
     endAt: "",
   });
@@ -41,6 +41,7 @@ export default function Reservation() {
     firstName: form.firstName.trim().length > 0,
     lastName: form.lastName.trim().length > 0,
     email: form.email.includes("@"),
+    paymentMethod: ["karta", "gotowka"].includes(form.paymentMethod),
     startAt: validRange,
     endAt: validRange,
     services: selected.length > 0,
@@ -71,6 +72,7 @@ export default function Reservation() {
   function handleChange(e) {
     const updated = { ...form, [e.target.name]: e.target.value };
     setForm(updated);
+
     setTouched((t) => ({ ...t, [e.target.name]: true }));
 
     if (
@@ -173,13 +175,6 @@ export default function Reservation() {
         <p>Wybierz termin i przygotuj swoje stanowisko w warsztacie</p>
       </div>
       <section className="section reservation-card">
-      
-        {/* <div className="reservation-image">
-          <img src="/gallery/reservation.jpg" alt="Warsztat" />
-          <div className="image-overlay">
-            <h1>Rezerwacja warsztatu</h1>
-          </div>
-        </div> */}
 
         <form onSubmit={handleSubmit}>
 
@@ -224,11 +219,24 @@ export default function Reservation() {
             className={fieldClass("endAt")}
           />
           
+          {/* Termin dostepny / zajety */}
           {availability !== null && (
             <p className={availability ? "valid-text" : "invalid-text"}>
               {availability ? "Termin dostępny" : "Termin zajęty"}
             </p>
           )}
+
+          <h3>Płatność</h3>
+          <select
+            name="paymentMethod"
+            value={form.paymentMethod}
+            onChange={handleChange}
+            className={`payment-method ${fieldClass("paymentMethod")}`}
+          >
+            <option value="">Wybierz metodę płatności</option>
+            <option value="karta">Karta</option>
+            <option value="gotowka">Gotówka</option>
+          </select>
 
           <h3>Usługi</h3>
           <div className="services-list">
@@ -238,8 +246,6 @@ export default function Reservation() {
                 className={`service-option ${
                   selected.includes(s.id)
                     ? "valid"
-                    // : touched.services
-                    // ? "invalid"
                     : ""
                 }`}
               >
