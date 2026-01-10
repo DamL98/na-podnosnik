@@ -17,9 +17,10 @@ export const services = [
     icon: "🛠️",
     opis: "Stanowisko z profesjonalnym podnośnikiem hydraulicznym.",
     wskazowki: [
-      "Upewnij się, że auto jest poprawnie ustawione",
-      "Zaciągnij ręczny przed podniesieniem",
-      "Nie wchodź pod auto bez blokad bezpieczeństwa",
+      "Podnośnik hydrauliczny o udźwigu do 5 ton",
+      "Możliwość samodzielnej naprawy pojazdu",
+      "Bezpieczna i komfortowa praca przy pojeździe",
+      "Oszczędność czasu podczas napraw i przeglądów"
     ],
   },
   {
@@ -30,8 +31,12 @@ export const services = [
     icon: "🔧",
     opis: "Kompletny zestaw narzędzi warsztatowych.",
     wskazowki: [
-      "Zwróć narzędzia po użyciu",
-      "Nie używaj kluczy udarowych do ręcznych śrub",
+      "Dostępne klucze: Oczkowe, nasadkowe, imbusy",
+      "Grzechotki wraz z wszystkimi rozmiarami nasadek",
+      "Klucze specjalistyczne: dynamometryczny, udarowy oraz do filtrów oleju",
+      "Elektonarzędzia: wkrętarka, szlifierka kątowa, wyrzynarka",
+      "Specjalne przyrządy ułatwiające prace takie jak: ściągacz sprężyn, zestaw do cofania tłoczków hamulcowych",
+      "Oraz wiele innych potrzebnych do wykonania pracy przy Twoim pojeździe!"
     ],
   },
   {
@@ -42,9 +47,11 @@ export const services = [
     icon: "💻",
     opis: "Odczyt i kasowanie błędów z komputera auta.",
     wskazowki: [
-      "Podłącz interfejs do gniazda OBD",
-      "Uruchom zapłon, ale nie silnik",
-      "Zapisz błędy przed ich skasowaniem",
+      "Dostępne są urządzenia diagnostyki komputerowej przez OBD2",
+      "Wiele interface pasujących to wszystkich modeli  samochodu",
+      "Możliwość sprawdzenia/usunięcia błędu w Twoim pojeździe!",
+      "Doposaż swoje auto w nowe funkcje dzięki możliwości programowania!",
+      "Przedsprzedażowe sprawdzenie komputerowe pojazdu"
     ],
   },
   {
@@ -55,8 +62,10 @@ export const services = [
     icon: "👨‍🔧",
     opis: "Wsparcie profesjonalnego mechanika.",
     wskazowki: [
-      "Przygotuj listę pytań",
-      "Pokaż co już zrobiłeś",
+      "Gdy tylko będziesz potrzebował pomocy zawołaj naszego mechanika!",
+      "Podpowie Ci jak coś naprawić",
+      "Sprawdzi czy wszystko jest w porządku",
+      "Naprawi pojazd za Ciebie! Gdy tylko będziesz tego potrzebował"
     ],
   },
 ];
@@ -133,7 +142,7 @@ export default function Services() {
             <h2>{activeService.icon} {activeService.nazwa}</h2>
             <p>{activeService.opis}</p>
 
-            <h4>Wskazówki:</h4>
+            <h4>Zapewniamy:</h4>
             <ul>
               {activeService.wskazowki.map((w, i) => (
                 <li key={i}>{w}</li>
