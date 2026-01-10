@@ -12,8 +12,7 @@ import Profile from "./pages/Profile";
 function App() {
   const location = useLocation();
   const { user, logout } = useAuth();
-
-  const isReservationPage = location.pathname === "/reservation";
+  const isHome = location.pathname === "/";
 
   function scrollToTop() {
     window.scrollTo({
@@ -25,52 +24,75 @@ function App() {
   return (
     <>
       <header className="nav">
+
         <div className="nav-inner">
           {/* LOGO */}
           <Link to="/" className="logo" onClick={scrollToTop}>
             <img src="/gallery/logo3.png" alt="Na Podnośnik" className="logo-img" />
           </Link>
 
-          <nav className="nav-links">
-            <a href="#services">Usługi</a>
-            <a href="#gallery">Galeria</a>
-            <a href="#opinions">Opinie</a>
-            <a href="#faq">FAQ</a>
+            {/* <nav className="nav-links">
+              <a href="#services">Usługi</a>
+              <a href="#gallery">Galeria</a>
+              <a href="#opinions">Opinie</a>
+              <a href="#faq">FAQ</a>
 
-            {/* AUTH UI
+              {user ? (
+                <div className="nav-user-menu">
+                  <div className="nav-user">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                      </svg> Profil ▾
+                  </div>
+
+                  <div className="nav-dropdown">
+                    <Link to="/profile">Mój Profil</Link>
+                    <Link to="/dashboard">Moje rezerwacje</Link>
+                    <Link to="/reservation">Nowa rezerwacja</Link>
+                    <button onClick={logout}>Wyloguj</button>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  <Link to="/login">Zaloguj</Link>
+                  <Link to="/register">
+                    <button className="nav-cta">Załóż konto</button>
+                  </Link>
+                </>
+              )}
+
+            </nav> */}
+
+            <nav className="nav-links">
+
+            {/* ==== MARKETING (tylko na stronie głównej) ==== */}
+            {isHome && (
+              <>
+                <a href="#services">Usługi</a>
+                <a href="#gallery">Galeria</a>
+                <a href="#opinions">Opinie</a>
+                <a href="#faq">FAQ</a>
+              </>
+            )}
+
+            {/* ==== ZALOGOWANY USER ==== */}
             {user ? (
               <>
-                <span className="nav-user">👋 {user.email}</span>
-                <button onClick={logout} className="nav-cta">
-                  Wyloguj
-                </button>
-              </>
-            ) : (
-              <>
-                <Link to="/login">Zaloguj</Link>
-                <Link to="/register">
-                  <button className="nav-cta">Załóż konto</button>
-                </Link>
-              </>
-            )} */}
+                {/* Poza home pokazuj tylko powrót */}
+                {!isHome && <Link to="/">Strona główna</Link>}
 
+                <div className="nav-user-menu">
+                  <div className="nav-user">👤 Profil</div>
 
-
-
-
-            {user ? (
-              <div className="nav-user-menu">
-                <div className="nav-user">
-                  Profil ▾
+                  <div className="nav-dropdown">
+                    <Link to="/dashboard">Moje rezerwacje</Link>
+                    <Link to="/profile">Moje dane</Link>
+                    <Link to="/reservation" className="dropdown-cta">Zarezerwuj</Link>
+                    <button onClick={logout}>Wyloguj</button>
+                  </div>
                 </div>
-
-                <div className="nav-dropdown">
-                  <Link to="/reservation">Zarezerwuj</Link>
-                  <Link to="/dashboard">Moje rezerwacje</Link>
-                  <Link to="/profile">Profil</Link>
-                  <button onClick={logout}>Wyloguj</button>
-                </div>
-              </div>
+              </>
             ) : (
               <>
                 <Link to="/login">Zaloguj</Link>
@@ -79,20 +101,11 @@ function App() {
                 </Link>
               </>
             )}
-
-
-
-
-
-
-            {/* CTA rezerwacji – tylko jeśli NIE jesteśmy na /reservation
-            {!isReservationPage && (
-              <Link to="/reservation">
-                <button className="nav-cta">Rezerwuj</button>
-              </Link>
-            )} */}
           </nav>
+
+
         </div>
+
       </header>
 
       <main className="container">

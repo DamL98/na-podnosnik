@@ -25,27 +25,23 @@ export default function Reservation() {
   const [availablePodnosniki, setAvailablePodnosniki] = useState([]);
   const [podnosniki, setPodnosniki] = useState([]);
 
-  const [form, setForm] = useState({
-    podnosnikId: null,
-    firstName: "",
-    lastName: "",
-    email: "",
-    paymentMethod: "karta",
-    startAt: "",
-    endAt: "",
-  });
-
   const [touched, setTouched] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
 
-
   const [pendingReservation, setPendingReservation] = useState(null);
   const [showAccountPopup, setShowAccountPopup] = useState(false);
 
-
-
+  const [form, setForm] = useState({
+      podnosnikId: null,
+      firstName: "",
+      lastName: "",
+      email: "",
+      paymentMethod: "karta",
+      startAt: "",
+      endAt: "",
+    });
 
     useEffect(() => {
       fetch("http://localhost:3001/api/podnosniki")
@@ -180,144 +176,6 @@ export default function Reservation() {
     }
   }
 
-
-
-  // async function handleSubmit(e) {
-  //   e.preventDefault();
-  //   setError(null);
-  //   setSuccess(false);
-
-  //   if (!formValid) {
-  //     setError("Formularz zawiera błędy.");
-  //     return;
-  //   }
-
-  //   try {
-  //     setLoading(true);
-
-  //     const hours = calculateHours(form.startAt, form.endAt);
-
-  //     const uslugi_json = services
-  //       .filter((s) => selected.includes(s.id))
-  //       .map((s) => ({
-  //         uslugaId: s.id,
-  //         nazwa: s.nazwa,
-  //         typ: s.typ,
-  //         stawka: s.stawka,
-  //         ilosc: s.typ === "H" ? hours : 1,
-  //         koszt: s.stawka * (s.typ === "H" ? hours : 1),
-  //       }));
-
-  //     const payload = {
-  //       podnosnikId: form.podnosnikId,
-  //       imie: form.firstName,
-  //       nazwisko: form.lastName,
-  //       email: form.email,
-  //       sposob_platnosci: form.paymentMethod,
-  //       od_ts: new Date(form.startAt).toISOString(),
-  //       do_ts: new Date(form.endAt).toISOString(),
-  //       uslugi_json,
-  //     };
-
-  //     const token = localStorage.getItem("token");
-
-  //     const res = await fetch("http://localhost:3001/api/rezerwacje", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //       body: JSON.stringify(payload),
-  //     });
-
-  //     const data = await res.json();
-  //     if (!res.ok) throw new Error(data.error);
-
-  //     setSuccess(true);
-  //   } catch (err) {
-  //     setError(err.message || "Błąd zapisu");
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // }
-
-
-  // TE JEST OK I DZIALA DOPOKI NIE KLICK ZALOZ KONTO
-  // function handleSubmit(e) {
-  //   e.preventDefault();
-  //   setError(null);
-
-  //   if (!formValid) {
-  //     setError("Formularz zawiera błędy.");
-  //     return;
-  //   }
-
-  //   const hours = calculateHours(form.startAt, form.endAt);
-
-  //   const uslugi_json = services
-  //     .filter((s) => selected.includes(s.id))
-  //     .map((s) => ({
-  //       uslugaId: s.id,
-  //       nazwa: s.nazwa,
-  //       typ: s.typ,
-  //       stawka: s.stawka,
-  //       ilosc: s.typ === "H" ? hours : 1,
-  //       koszt: s.stawka * (s.typ === "H" ? hours : 1),
-  //     }));
-
-  //   const payload = {
-  //     podnosnikId: form.podnosnikId,
-  //     imie: form.firstName,
-  //     nazwisko: form.lastName,
-  //     email: form.email,
-  //     sposob_platnosci: form.paymentMethod,
-  //     od_ts: new Date(form.startAt).toISOString(),
-  //     do_ts: new Date(form.endAt).toISOString(),
-  //     uslugi_json,
-  //   };
-
-  //   if (user) {
-  //     // zalogowany → zapis od razu
-  //     sendReservation(payload);
-  //   } else {
-  //     // gość → pokaż popup
-  //     setPendingReservation(payload);
-  //     setShowAccountPopup(true);
-  //   }
-  // }
-
-
-
-
-  // async function sendReservation(payload) {
-  //   try {
-  //     setLoading(true);
-
-  //     // const token = localStorage.getItem("token");
-
-  //     // const res = await fetch("http://localhost:3001/api/rezerwacje", {
-  //     //   method: "POST",
-  //     //   headers: {
-  //     //     "Content-Type": "application/json",
-  //     //     ...(token ? { Authorization: `Bearer ${token}` } : {})
-  //     //   },
-  //     //   body: JSON.stringify(payload),
-  //     // });
-
-  //     const data = await res.json();
-  //     if (!res.ok) throw new Error(data.error);
-
-  //     setSuccess(true);
-  //     setShowAccountPopup(false);
-  //     setPendingReservation(null);
-  //   } catch (err) {
-  //     setError(err.message || "Błąd zapisu");
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // }
-
-
   async function handleSubmit(e) {
     e.preventDefault();
     setError(null);
@@ -365,7 +223,6 @@ export default function Reservation() {
 
 
 
-
   async function sendReservation(payload) {
     try {
       setLoading(true);
@@ -401,8 +258,6 @@ export default function Reservation() {
   }
 
 
-
-
   const previewTotal = services
     .filter((s) => selected.includes(s.id))
     .reduce((sum, s) => sum + s.stawka, 0);
@@ -418,12 +273,12 @@ export default function Reservation() {
       </div>
       <section className="section reservation-card">
 
-        <h2>Nowa rezerwacja</h2>
+        <h2 className="h2-reservation-tittle">Nowa rezerwacja</h2>
         <form onSubmit={handleSubmit}>
 
           {!user && (
           <>
-          <h3> Dane osobowe </h3>
+          <h3 className="h3-reservation-tittle"> Dane osobowe </h3>
             <input
               name="firstName"
               placeholder="Imię"
@@ -451,14 +306,14 @@ export default function Reservation() {
           )}
 
           {user && (
-            <div className="user-autofill">
-              👤 <h3>Rezerwacja na konto: <b>{user.email}</b></h3>
+            <div className="user-autofill h3-reservation-tittle-loggedin">
+               <h3>Na konto: 👤 <b>{user.email}</b></h3>
             </div>
           )}
 
           
 
-          <h3>Termin</h3>
+          <h3 className="h3-reservation-tittle">Termin</h3>
           <input
             type="datetime-local"
             name="startAt"
@@ -475,11 +330,6 @@ export default function Reservation() {
             className={fieldClass("endAt")}
           />
           
-          {/* {availability !== null && (
-            <p className={availability ? "valid-text" : "invalid-text"}>
-              {availability ? "Termin dostępny" : "Termin zajęty"}
-            </p>
-          )} */}
 
           {form.startAt && form.endAt && (
             availablePodnosniki.some(p => p.id === form.podnosnikId) ? (
@@ -489,7 +339,7 @@ export default function Reservation() {
             )
           )}
 
-          <h3>Stanowisko</h3>
+          <h3 className="h3-reservation-tittle">Stanowisko</h3>
                 {!form.startAt || !form.endAt ? (
                   <p className="hint-text">Wybierz zakres daty</p>
                 ) : availablePodnosniki.length === 0 ? (
@@ -511,7 +361,7 @@ export default function Reservation() {
                 )}
 
 
-          <h3>Usługi</h3>
+          <h3 className="h3-reservation-tittle">Usługi</h3>
           <div className="services-list">
             {services.map((s) => (
               <label
@@ -533,21 +383,17 @@ export default function Reservation() {
                 <span>{s.stawka} zł</span>
               </label>
             ))}
-              {/* {touched.services && selected.length === 0 && (
-                <p className="invalid-text" style={{ marginTop: "8px" }}>
-                  Wybierz przynajmniej jedną usługę
-                </p>
-              )} */}
+              
+
           </div>
 
-          <h3>Płatność</h3>
+          <h3 className="h3-reservation-tittle">Płatność</h3>
                     <select
                       name="paymentMethod"
                       value={form.paymentMethod}
                       onChange={handleChange}
                       className={`payment-method ${fieldClass("paymentMethod")}`}
                     >
-                      <option value="">Wybierz metodę płatności</option>
                       <option value="karta">Karta</option>
                       <option value="gotowka">Gotówka</option>
                     </select>
