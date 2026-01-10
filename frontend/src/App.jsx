@@ -6,6 +6,8 @@ import Reservation from "./pages/Reservation";
 import Footer from "./components/Footer";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Dashboard from "./pages/Dashboard";
+import Profile from "./pages/Profile";
 
 function App() {
   const location = useLocation();
@@ -35,7 +37,7 @@ function App() {
             <a href="#opinions">Opinie</a>
             <a href="#faq">FAQ</a>
 
-            {/* AUTH UI */}
+            {/* AUTH UI
             {user ? (
               <>
                 <span className="nav-user">👋 {user.email}</span>
@@ -50,14 +52,44 @@ function App() {
                   <button className="nav-cta">Załóż konto</button>
                 </Link>
               </>
-            )}
+            )} */}
 
-            {/* CTA rezerwacji – tylko jeśli NIE jesteśmy na /reservation */}
+
+
+
+
+            {user ? (
+  <div className="nav-user-menu">
+    <div className="nav-user">
+      👤 {user.email}
+    </div>
+
+    <div className="nav-dropdown">
+      <Link to="/dashboard">Moje rezerwacje</Link>
+      <Link to="/profile">Profil</Link>
+      <button onClick={logout}>Wyloguj</button>
+    </div>
+  </div>
+) : (
+  <>
+    <Link to="/login">Zaloguj</Link>
+    <Link to="/register">
+      <button className="nav-cta">Załóż konto</button>
+    </Link>
+  </>
+)}
+
+
+
+
+
+
+            {/* CTA rezerwacji – tylko jeśli NIE jesteśmy na /reservation
             {!isReservationPage && (
               <Link to="/reservation">
                 <button className="nav-cta">Rezerwuj</button>
               </Link>
-            )}
+            )} */}
           </nav>
         </div>
       </header>
@@ -68,6 +100,8 @@ function App() {
           <Route path="/reservation" element={<Reservation />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </main>
 

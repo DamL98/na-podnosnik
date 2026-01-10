@@ -2,10 +2,16 @@ require('dotenv').config();
 const express = require("express");
 const cors = require("cors");
 const prisma = require('./../shared/db/prisma');
+const bcrypt = require("bcrypt");
+const { createToken } = require("../auth/authenticationService");
+
+// const auth = require("./middlewares/auth");
+// const cookieParser = require("cookie-parser");
 
 // ROUTES
 const reservationsRouter = require("./routes/reservation");
 const availabilityRouter = require("./routes/availability");
+const meRouter = require("./routes/me");
 
 // APP BUILD
 const app = express();
@@ -16,35 +22,52 @@ app.use(express.json());
 // ENDPOINTY
 app.use("/api/rezerwacje", reservationsRouter);
 app.use("/api/availability", availabilityRouter);
-
+app.use("/api/me", meRouter);
 
 // Rejestracja i logowanie endpointy
-app.post("/auth/register", async (req, res) => {
-  const { email, password, username } = req.body;
+app.post("/api/auth/register", async (req, res) => {
+  try {
+    const { email, password, username } = req.body;
 
-  const hash = await bcrypt.hash(password, 12);
+    if (!email || !password) {
+      return res.status(400).json({ error: "Brak danych" });
+    }
 
-  const user = await prisma.user.create({
-    data: {
-      email,
-      username,
-      password: hash,
-    },
-  });
+    const existing = await prisma.user.findUnique({
+      where: { email }
+    });
 
-  const token = createToken(user);
+    if (existing) {
+      return res.status(409).json({ error: "Email już istnieje" });
+    }
 
-  await prisma.session.create({
-    data: {
-      userId: user.id,
-      token,
-      expiresAt: new Date(Date.now() + 7 * 864e5),
-    },
-  });
+    const hash = await bcrypt.hash(password, 12);
 
-  res.cookie("auth", token, { httpOnly: true });
-  res.json({ user });
+    const user = await prisma.user.create({
+      data: {
+        email,
+        username,
+        password: hash,
+      },
+    });
+
+    const token = createToken(user);
+
+    await prisma.session.create({
+      data: {
+        userId: user.id,
+        token,
+        expiresAt: new Date(Date.now() + 7 * 864e5),
+      },
+    });
+
+    res.json({ user, token });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Błąd serwera" });
+  }
 });
+
 
 
 app.post("/auth/login", async (req, res) => {
@@ -86,6 +109,33 @@ app.get("/auth/me", async (req, res) => {
 
   res.json(session.user);
 });
+
+
+
+
+
+// app.get("/me/reservations", auth, async (req, res) => {
+//   const reservations = await prisma.rezerwacja.findMany({
+//     where: { userId: req.user.id },
+//     orderBy: { od_ts: "desc" }
+//   });
+
+//   res.json(reservations);
+// });
+
+
+// app.get("/me/reservations/:id", auth, async (req, res) => {
+//   const r = await prisma.rezerwacja.findFirst({
+//     where: {
+//       id: Number(req.params.id),
+//       userId: req.user.id
+//     }
+//   });
+
+//   if (!r) return res.sendStatus(404);
+//   res.json(r);
+// });
+
 
 
 app.get("/", (req, res) => {

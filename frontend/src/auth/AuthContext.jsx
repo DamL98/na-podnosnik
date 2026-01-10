@@ -1,79 +1,89 @@
-import { Routes, Route, Link, useLocation } from "react-router-dom";
-import { useAuth } from "./auth/AuthContext";
+import { createContext, useContext, useEffect, useState } from "react";
 
-import Home from "./pages/Home";
-import Reservation from "./pages/Reservation";
-import Footer from "./components/Footer";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
+const AuthContext = createContext(null);
 
-function App() {
-  const location = useLocation();
-  const { user, logout } = useAuth();
+export function AuthProvider({ children }) {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const isReservationPage = location.pathname === "/reservation";
+  useEffect(() => {
+    const token = localStorage.getItem("token");
 
-  function scrollToTop() {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
+    if (token) {
+      fetch("http://localhost:3001/api/auth/me", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((res) => {
+          if (!res.ok) throw new Error();
+          return res.json();
+        })
+        .then((data) => {
+          setUser(data.user);
+        })
+        .catch(() => {
+          localStorage.removeItem("token");
+          setUser(null);
+        })
+        .finally(() => setLoading(false));
+    } else {
+      setLoading(false);
+    }
+  }, []);
+
+  async function login(email, password) {
+    const res = await fetch("http://localhost:3001/api/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
     });
+
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error);
+
+    localStorage.setItem("token", data.token);
+    setUser(data.user);
   }
 
+  async function register(email, password) {
+    const res = await fetch("http://localhost:3001/api/auth/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+
+    const data = await res.json();
+    console.log("REGISTER RESPONSE:", res.status, data);
+
+    if (!res.ok) throw new Error(data.error);
+
+    localStorage.setItem("token", data.token);
+    setUser(data.user);
+  }
+
+
+  function logout() {
+    localStorage.removeItem("token");
+    setUser(null);
+  }
+
+
   return (
-    <>
-      <header className="nav">
-        <div className="nav-inner">
-          {/* LOGO */}
-          <Link to="/" className="logo" onClick={scrollToTop}>
-            <img src="/gallery/logo3.png" alt="Na Podnośnik" className="logo-img" />
-          </Link>
-
-          <nav className="nav-links">
-            <a href="#services">Usługi</a>
-            <a href="#gallery">Galeria</a>
-            <a href="#opinions">Opinie</a>
-            <a href="#faq">FAQ</a>
-
-            {/* AUTH UI */}
-            {user ? (
-              <>
-                <span className="nav-user">👋 {user.email}</span>
-                <button onClick={logout} className="nav-cta">
-                  Wyloguj
-                </button>
-              </>
-            ) : (
-              <>
-                <Link to="/login">Zaloguj</Link>
-                <Link to="/register">
-                  <button className="nav-cta">Załóż konto</button>
-                </Link>
-              </>
-            )}
-
-            {/* CTA rezerwacji – tylko jeśli NIE jest sie na /reservation */}
-            {!isReservationPage && (
-              <Link to="/reservation">
-                <button className="nav-cta">Rezerwuj</button>
-              </Link>
-            )}
-          </nav>
-        </div>
-      </header>
-
-      <main className="container">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/reservation" element={<Reservation />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-        </Routes>
-      </main>
-
-      <Footer />
-    </>
+    <AuthContext.Provider
+      value={{
+        user,
+        login,
+        register,
+        logout,
+        loading,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
   );
 }
 
-export default App;
+export function useAuth() {
+  return useContext(AuthContext);
+}

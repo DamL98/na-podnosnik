@@ -1,12 +1,13 @@
 const express = require("express");
 const prisma = require("../../shared/db/prisma");
+const auth = require("../middlewares/auth");
 
 const router = express.Router();
 
 /**
  * POST /api/rezerwacje
  */
-router.post("/", async (req, res) => {
+router.post("/", auth, async (req, res) => {
   try {
     const {
       podnosnikId,
@@ -63,6 +64,8 @@ router.post("/", async (req, res) => {
     }
 
     /* ===== ZAPIS ===== */
+    const user = req.user || null; // 👈 z middleware auth
+
     const reservation = await prisma.rezerwacje.create({
       data: {
         podnosnikid: podnosnikId,
@@ -73,6 +76,7 @@ router.post("/", async (req, res) => {
         od_ts: start,
         do_ts: end,
         uslugi_json,
+        userId: user?.id || null,   // 👈 TO JEST KLUCZ
       },
     });
 

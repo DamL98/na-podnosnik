@@ -853,6 +853,56 @@ textarea:focus {
 
 
 
+
+
+
+
+
+/* ################################################################################ */
+/* 
+Rejestracja / login - menu uzytkownika w navie
+.nav-user-menu {
+  position: relative;
+}
+
+.nav-dropdown {
+  position: absolute;
+  top: 120%;
+  right: 0;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+  padding: 12px;
+  display: none;
+  min-width: 200px;
+}
+
+.nav-user-menu:hover .nav-dropdown {
+  display: block;
+}
+
+.nav-dropdown a,
+.nav-dropdown button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.nav-dropdown a:hover,
+.nav-dropdown button:hover {
+  background: #f5f7fa;
+} */
+/* ################################################################################ */
+
+
+
+
+
 /* ################################################################################ */
 /* RWD MOBILE */
 /* ################################################################################ */
