@@ -135,6 +135,9 @@ http://localhost:5173*
 http://localhost:3001*
 
 ## PostgreSQL
+<details>
+<summary>Struktura bazy danych</summary>
+      
 ### Lista tabel
 ![ListaTabel](db-screenshots/ListaTabel.png)
 
@@ -149,3 +152,4 @@ http://localhost:3001*
 
 ### Podnośniki
 ![Podnosniki](db-screenshots/Podnosniki.png)
+</details>
