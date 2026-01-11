@@ -22,7 +22,7 @@
 
 ### 🎯 **Główne funkcjonalności**
 
-      *Rezerwacje*
+      Rezerwacje
             wybór zakresu dat i godzin,
             automatyczne sprawdzanie dostępności stanowisk,
             wybór usług dodatkowych (rozliczanych godzinowo lub ryczałtowo),
@@ -32,21 +32,21 @@
                   gościa,
                   użytkownika zalogowanego.
             
-      *Użytkownicy*
+      Użytkownicy
             rejestracja i logowanie,
             sesje JWT przechowywane w bazie,
             konto tworzone automatycznie przy rezerwacji,
             profil użytkownika (imię, nazwisko, telefon),
             dashboard z listą własnych rezerwacji.
       
-      *Panel użytkownika*
+      Panel użytkownika
             lista wszystkich rezerwacji,
             podgląd usług, godzin i kosztów,
             informacja o metodzie płatności.
 
 *Frontend komunikuje się z backendem przez REST API, a uwierzytelnianie odbywa się za pomocą tokenów JWT przechowywanych w tabeli session*
 
-### 🗃️ **Model danych (uproszczony)**
+### 🗃️ **Model danych**
 
       [User]
             id
@@ -73,7 +73,7 @@
             userId
             expiresAt
 
-🔐 **Autoryzacja**
+### 🔐 **Autoryzacja**
 
       JWT tokenów
       middleware auth i authOptional
@@ -82,8 +82,7 @@
             goście mogą tworzyć rezerwacje,
             zalogowani użytkownicy mają dostęp do /api/me i /api/me/rezerwacje.
 
-🖥️ **Frontend**
-Technologie:
+### 🖥️ **Frontend Technologie:**
 
       React
       React Router
@@ -97,8 +96,7 @@ Technologie:
             profil użytkownika.
 
 
-🔧**Backend**
-Technologie:
+### 🔧**Backend Technologie:**
 
       Node.js
       Express
@@ -107,7 +105,7 @@ Technologie:
       bcrypt
       JWT
 
-**Główne endpointy:**
+### **Główne endpointy:**
 
       POST   /api/auth/register
       POST   /api/auth/login
@@ -120,7 +118,7 @@ Technologie:
       GET    /api/me
       PUT    /api/me
 
-⚙️ **Instalacja lokalna**
+### ⚙️ **Instalacja lokalna**
 
       Backend
             cd backend
