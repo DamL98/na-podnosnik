@@ -6,18 +6,19 @@
 
 **System umożliwia:**
 
-      tworzenie rezerwacji jako gość,
-      założenie konta w trakcie rezerwacji,
-      zarządzanie własnymi rezerwacjami po zalogowaniu,
-      edycję danych profilu użytkownika.
-      Aplikacja składa się z:
-      frontend: React (SPA),
-      backend: Node.js + Express,
-      baza danych: PostgreSQL (Prisma ORM).
+      - tworzenie rezerwacji jako gość,
+      - założenie konta w trakcie rezerwacji,
+      - zarządzanie własnymi rezerwacjami po zalogowaniu,
+      - edycję danych profilu użytkownika.
+      
+      *Aplikacja składa się z:*
+            frontend: React (SPA),
+            backend: Node.js + Express,
+            baza danych: PostgreSQL (Prisma ORM).
 
 🎯 **Główne funkcjonalności**
 
-      Rezerwacje
+      *Rezerwacje*
             wybór zakresu dat i godzin,
             automatyczne sprawdzanie dostępności stanowisk,
             wybór usług dodatkowych (rozliczanych godzinowo lub ryczałtowo),
@@ -27,14 +28,14 @@
                   gościa,
                   użytkownika zalogowanego.
             
-      Użytkownicy
+      *Użytkownicy*
             rejestracja i logowanie,
             sesje JWT przechowywane w bazie,
             konto tworzone automatycznie przy rezerwacji,
             profil użytkownika (imię, nazwisko, telefon),
             dashboard z listą własnych rezerwacji.
       
-      Panel użytkownika
+      *Panel użytkownika*
             lista wszystkich rezerwacji,
             podgląd usług, godzin i kosztów,
             informacja o metodzie płatności.
