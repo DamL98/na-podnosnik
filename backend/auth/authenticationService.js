@@ -1,10 +1,11 @@
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
+const jwt = require("jsonwebtoken");
 
-export function createToken(user) {
+function createToken(user) {
   return jwt.sign(
     { id: user.id, email: user.email },
     process.env.JWT_SECRET,
     { expiresIn: "7d" }
   );
 }
+
+module.exports = { createToken };

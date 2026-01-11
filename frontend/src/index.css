@@ -392,7 +392,7 @@ input[type="checkbox"] {
 
 .card:hover {
   transform: translateY(-4px);
-  background: #ffed2dff;
+  background: #5ba2ffcb;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
   transition: transform 0.4s ease, box-shadow 0.2s ease, background 0.4s ease;
 }
@@ -857,6 +857,277 @@ textarea:focus {
 @keyframes modalIn {
   from { transform: scale(0.9); opacity: 0; }
   to { transform: scale(1); opacity: 1; }
+}
+/* ################################################################################ */
+
+
+
+
+.payment-method{
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.stanowisko-option.valid {
+  background: #e8f5e9;
+  border-color: #66bb6a;
+}
+
+.stanowisko-option{
+    display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+
+
+
+/* ################################################################################ */
+/* 
+Rejestracja / login - menu uzytkownika w navie
+/* Navbar user dropdown */
+.nav-user-menu {
+  position: relative;
+  display: inline-block;
+}
+
+.nav-user {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--primary);
+   padding: 8px 12px;
+}
+
+/* Dropdown */
+.nav-dropdown {
+  position: absolute;
+  top: 100%;        /* dokładnie pod "Profil" */
+  right: 0;
+
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+  padding: 8px;
+
+  min-width: 220px;
+  z-index: 200;
+
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-10px);
+  transition: 0.2s ease;
+}
+
+.nav-user-menu:hover .nav-dropdown {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.nav-dropdown a,
+.nav-dropdown button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.nav-dropdown a:hover,
+.nav-dropdown button:hover {
+  background: #f5f7fa;
+}
+
+.nav-dropdown button {
+  color: #c62828;
+  font-weight: 600;
+}
+/* ################################################################################ */
+
+
+
+
+
+
+
+
+/* ################################################################################ */
+/* ===================== DASHBOARD ===================== */
+.dashboard-sub {
+  color: #546e7a;
+  margin-bottom: 32px;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+.reservation-tile {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  transition: 0.25s ease;
+}
+
+.reservation-tile:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+}
+
+/* Header */
+.tile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.tile-header .date {
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.tile-header .time {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+/* Body */
+.station {
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.services {
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+}
+
+.service-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  font-size: 14px;
+}
+
+/* Footer */
+.tile-footer {
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.payment {
+  font-weight: 600;
+  color: #455a64;
+}
+
+.total {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--primary);
+}
+
+.empty {
+  background: #e3f2fd;
+  padding: 24px;
+  border-radius: 12px;
+  text-align: center;
+  font-weight: 600;
+}
+/* ################################################################################ */
+
+.tile {
+  width: 100px;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.tile:hover {
+  background-color: #f0f0f0;
+}
+
+.tile svg {
+  margin-bottom: 8px;
+  color: #333;
+}
+
+
+
+
+
+.h3-reservation-tittle{
+  width: 100%;
+  text-align: left;
+  border-bottom: 1px solid var(--primary);
+  padding-bottom: 8px;
+}
+
+.h3-reservation-tittle-loggedin{
+  width: 100%;
+  text-align: center;
+  /* border-bottom: 1px solid var(--primary); */
+  padding-bottom: 8px;
+}
+
+.h2-reservation-tittle{
+  width: 100%;
+  text-align: center;
+  margin-bottom: 36px;
+}
+
+
+
+
+/* ################################################################################ */
+/* ===== PROFILE ===== */
+.profile-card {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+  border: 1px solid var(--border);
+}
+
+.profile-card h3 {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.profile-card p {
+  margin: 8px 0;
 }
 /* ################################################################################ */
 

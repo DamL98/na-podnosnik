@@ -50,4 +50,44 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/podnosniki", async (req, res) => {
+  try {
+    const { od, do: doTs } = req.query;
+
+    if (!od || !doTs) {
+      return res.status(400).json({ error: "Brak zakresu czasu" });
+    }
+
+    const start = new Date(od);
+    const end = new Date(doTs);
+
+    // wszystkie aktywne podnośniki
+    const podnosniki = await prisma.podnosnik.findMany({
+      where: { aktywny: true }
+    });
+
+    // zajęte w tym czasie
+    const zajete = await prisma.$queryRawUnsafe(
+      `
+      SELECT DISTINCT podnosnikid FROM rezerwacje
+      WHERE tstzrange(od_ts, do_ts, '[)') &&
+            tstzrange($1::timestamptz, $2::timestamptz, '[)')
+      `,
+      start.toISOString(),
+      end.toISOString()
+    );
+
+    const zajeteIds = zajete.map(r => r.podnosnikid);
+
+    const wolne = podnosniki.filter(p => !zajeteIds.includes(p.id));
+
+    res.json(wolne);
+  } catch (err) {
+    console.error("availability/podnosniki:", err);
+    res.status(500).json({ error: "Błąd serwera" });
+  }
+});
+
+
+
 module.exports = router;

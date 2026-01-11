@@ -16,40 +16,50 @@ model podnosnik {
 }
 
 model rezerwacje {
-  id               BigInt   @id @default(autoincrement())
+  id BigInt @id @default(autoincrement())
 
-  podnosnikid      Int
-  podnosnik        podnosnik @relation(fields: [podnosnikid], references: [id])
+  podnosnikid Int
+  podnosnik   podnosnik @relation(fields: [podnosnikid], references: [id])
 
-  imie             String
-  nazwisko         String
-  email            String
+  userId String?
+  user   User?   @relation(fields: [userId], references: [id])
+
+  imie     String
+  nazwisko String
+  email    String
 
   sposob_platnosci String
 
-  od_ts            DateTime @db.Timestamptz
-  do_ts            DateTime @db.Timestamptz
+  od_ts DateTime @db.Timestamptz
+  do_ts DateTime @db.Timestamptz
 
-  uslugi_json      Json     @default("[]")
+  uslugi_json Json @default("[]")
 
   @@index([podnosnikid])
+  @@index([userId])
 }
 
 model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  username  String?  @unique
-  password  String?
-  name      String?
-  image     String?
+  id       String  @id @default(uuid())
+  email    String  @unique
+  username String? @unique
+  password String?
+  name     String?
+  image    String?
+
+  firstName String?
+  lastName  String?
+  phone     String?
+
   createdAt DateTime @default(now())
 
-  accounts  Account[]
-  sessions  Session[]
+  accounts   Account[]
+  sessions   Session[]
+  rezerwacje rezerwacje[]
 }
 
 model Account {
-  id                String @id @default(uuid())
+  id                String  @id @default(uuid())
   userId            String
   provider          String
   providerAccountId String

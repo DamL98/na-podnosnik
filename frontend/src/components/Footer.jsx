@@ -12,9 +12,9 @@ export default function Footer() {
 
         <div>
           <h4>Kontakt</h4>
-          <p>📞 <a href="tel:+48123123123">+48 123 123 123</a></p>
+          <p>📞 <a href="tel:+48123123123">+48 668 535 243</a></p>
           <p>✉️ <a href="mailto:kontakt@napodnosnik.pl">kontakt@napodnosnik.pl</a></p>
-          <p>📍 ul. Przykładowa 12, 00-000 Miasto</p>
+          <p>📍 ul. Jackowskiego 12, 86-300 Grudziądz</p>
         </div>
 
         <div>
