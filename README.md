@@ -1,8 +1,8 @@
 # 🛠️ Na Podnośnik — System Rezerwacji Warsztatu Samoobsługowego
 
 ## 🔗 **Linki**
--[Tablica Kanban](https://trello.com/b/GI6MYXNN/pbl)
--[Video aplikacji](https://drive.google.com/drive/folders/1QLhUJOOGh32pvv0GQUnnN3c4L74g3Nhy?usp=sharing)
+[Tablica Kanban](https://trello.com/b/GI6MYXNN/pbl)<br>
+[Video aplikacji](https://drive.google.com/drive/folders/1QLhUJOOGh32pvv0GQUnnN3c4L74g3Nhy?usp=sharing)
 
 
 ## 📌 **Opis projektu**
@@ -10,15 +10,15 @@
 
 ## **System umożliwia:**
 
-      -tworzenie rezerwacji jako gość,
-      -założenie konta w trakcie rezerwacji,
-      -zarządzanie własnymi rezerwacjami po zalogowaniu,
-      -edycję danych profilu użytkownika.
+-tworzenie rezerwacji jako gość,
+-założenie konta w trakcie rezerwacji,
+-zarządzanie własnymi rezerwacjami po zalogowaniu,
+-edycję danych profilu użytkownika.
       
-      Aplikacja składa się z:
-            frontend: React (SPA),
-            backend: Node.js + Express,
-            baza danych: PostgreSQL (Prisma ORM).
+### Aplikacja składa się z:
+- frontend: React (SPA),
+- backend: Node.js + Express,
+- baza danych: PostgreSQL (Prisma ORM).
 
 ### 🎯 **Główne funkcjonalności**
 
