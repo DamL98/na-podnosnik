@@ -1,10 +1,10 @@
-🛠️ Na Podnośnik — System Rezerwacji Warsztatu Samoobsługowego
+🛠️ ***Na Podnośnik — System Rezerwacji Warsztatu Samoobsługowego***
 
-📌 Opis projektu
+📌 **Opis projektu**
 
-Na Podnośnik to aplikacja webowa umożliwiająca klientom rezerwację stanowisk warsztatowych (podnośników) wraz z dodatkowymi usługami (narzędzia, pomoc mechanika, diagnostyka itp.).
+*Na Podnośnik to aplikacja webowa umożliwiająca klientom rezerwację stanowisk warsztatowych (podnośników) wraz z dodatkowymi usługami (narzędzia, pomoc mechanika, diagnostyka itp.).*
 
-System umożliwia:
+**System umożliwia:**
 
       tworzenie rezerwacji jako gość,
       założenie konta w trakcie rezerwacji,
@@ -15,7 +15,7 @@ System umożliwia:
       backend: Node.js + Express,
       baza danych: PostgreSQL (Prisma ORM).
 
-🎯 Główne funkcjonalności
+🎯 **Główne funkcjonalności**
 
       Rezerwacje
             wybór zakresu dat i godzin,
@@ -39,9 +39,9 @@ System umożliwia:
             podgląd usług, godzin i kosztów,
             informacja o metodzie płatności.
 
-Frontend komunikuje się z backendem przez REST API, a uwierzytelnianie odbywa się za pomocą tokenów JWT przechowywanych w tabeli session.
+*Frontend komunikuje się z backendem przez REST API, a uwierzytelnianie odbywa się za pomocą tokenów JWT przechowywanych w tabeli session*
 
-🗃️ Model danych (uproszczony)
+🗃️ **Model danych (uproszczony)**
 
       [User]
             id
@@ -68,7 +68,7 @@ Frontend komunikuje się z backendem przez REST API, a uwierzytelnianie odbywa s
             userId
             expiresAt
 
-🔐 Autoryzacja
+🔐 **Autoryzacja**
 
       JWT tokenów
       middleware auth i authOptional
@@ -77,7 +77,7 @@ Frontend komunikuje się z backendem przez REST API, a uwierzytelnianie odbywa s
             goście mogą tworzyć rezerwacje,
             zalogowani użytkownicy mają dostęp do /api/me i /api/me/rezerwacje.
 
-🖥️ Frontend
+🖥️ **Frontend**
 Technologie:
 
       React
@@ -92,7 +92,7 @@ Technologie:
             profil użytkownika.
 
 
-🔧 Backend
+🔧**Backend**
 Technologie:
 
       Node.js
@@ -102,7 +102,7 @@ Technologie:
       bcrypt
       JWT
 
-Główne endpointy:
+**Główne endpointy:**
 
       POST   /api/auth/register
       POST   /api/auth/login
@@ -115,7 +115,7 @@ Główne endpointy:
       GET    /api/me
       PUT    /api/me
 
-⚙️ Instalacja lokalna
+⚙️ **Instalacja lokalna**
 
       Backend
             cd backend
@@ -129,8 +129,8 @@ Główne endpointy:
             npm run dev
 
 
-Aplikacja frontendowa:
-http://localhost:5173
+*Aplikacja frontendowa:
+http://localhost:5173*
 
-API backendu:
-http://localhost:3001
+*API backendu:
+http://localhost:3001*
