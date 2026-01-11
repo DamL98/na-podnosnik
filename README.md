@@ -140,16 +140,24 @@ http://localhost:3001*
       
 ### Lista tabel
 ![ListaTabel](db-screenshots/ListaTabel.png)
+</details>
 
+<details>
 ### Users
 ![Users](db-screenshots/Users.png)
+</details>
 
+<details>
 ### Rezerwacja
 ![Rezerwacja](db-screenshots/Rezerwacja.png)
+</details>
 
+<details>
 ### Sesje
 ![Sesje](db-screenshots/Sesje.png)
+</details>
 
+<details>
 ### Podnośniki
 ![Podnosniki](db-screenshots/Podnosniki.png)
 </details>
