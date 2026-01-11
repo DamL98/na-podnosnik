@@ -42,6 +42,7 @@ System umożliwia:
 Frontend komunikuje się z backendem przez REST API, a uwierzytelnianie odbywa się za pomocą tokenów JWT przechowywanych w tabeli session.
 
 🗃️ Model danych (uproszczony)
+
       [User]
             id
             email
@@ -68,31 +69,27 @@ Frontend komunikuje się z backendem przez REST API, a uwierzytelnianie odbywa s
             expiresAt
 
 🔐 Autoryzacja
+
       JWT tokenów
       middleware auth i authOptional
+      
       Dzięki temu:
             goście mogą tworzyć rezerwacje,
             zalogowani użytkownicy mają dostęp do /api/me i /api/me/rezerwacje.
 
 🖥️ Frontend
 Technologie:
+
       React
-      
       React Router
-      
       Context API (AuthContext)
       
       Funkcje:
-      
-      formularz rezerwacji z walidacją,
-      
-      dropdown menu użytkownika,
-      
-      dynamiczne menu zależne od strony i zalogowania,
-      
-      dashboard,
-      
-      profil użytkownika.
+            formularz rezerwacji z walidacją,
+            dropdown menu użytkownika,
+            dynamiczne menu zależne od strony i zalogowania,
+            dashboard,
+            profil użytkownika.
 
 
 🔧 Backend
@@ -119,6 +116,7 @@ Główne endpointy:
       PUT    /api/me
 
 ⚙️ Instalacja lokalna
+
       Backend
             cd backend
             npm install
