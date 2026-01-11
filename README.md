@@ -1,21 +1,21 @@
 # 🛠️ Na Podnośnik — System Rezerwacji Warsztatu Samoobsługowego
 
-🔗 **Linki**
-[Tablica Kanban](https://trello.com/b/GI6MYXNN/pbl)
-[Video aplikacji](https://drive.google.com/drive/folders/1QLhUJOOGh32pvv0GQUnnN3c4L74g3Nhy?usp=sharing)
+## 🔗 **Linki**
+-[Tablica Kanban](https://trello.com/b/GI6MYXNN/pbl)
+-[Video aplikacji](https://drive.google.com/drive/folders/1QLhUJOOGh32pvv0GQUnnN3c4L74g3Nhy?usp=sharing)
 
 
 ## 📌 **Opis projektu**
 *Na Podnośnik to aplikacja webowa umożliwiająca klientom rezerwację stanowisk warsztatowych (podnośników) wraz z dodatkowymi usługami (narzędzia, pomoc mechanika, diagnostyka itp.).*
 
-### **System umożliwia:**
+## **System umożliwia:**
 
-      - tworzenie rezerwacji jako gość,
-      - założenie konta w trakcie rezerwacji,
-      - zarządzanie własnymi rezerwacjami po zalogowaniu,
-      - edycję danych profilu użytkownika.
+      -tworzenie rezerwacji jako gość,
+      -założenie konta w trakcie rezerwacji,
+      -zarządzanie własnymi rezerwacjami po zalogowaniu,
+      -edycję danych profilu użytkownika.
       
-      *Aplikacja składa się z:*
+      Aplikacja składa się z:
             frontend: React (SPA),
             backend: Node.js + Express,
             baza danych: PostgreSQL (Prisma ORM).
@@ -46,7 +46,7 @@
 
 *Frontend komunikuje się z backendem przez REST API, a uwierzytelnianie odbywa się za pomocą tokenów JWT przechowywanych w tabeli session*
 
-### 🗃️ **Model danych**
+## 🗃️ **Model danych**
 
       [User]
             id
@@ -73,7 +73,7 @@
             userId
             expiresAt
 
-### 🔐 **Autoryzacja**
+## 🔐 **Autoryzacja**
 
       JWT tokenów
       middleware auth i authOptional
@@ -82,7 +82,7 @@
             goście mogą tworzyć rezerwacje,
             zalogowani użytkownicy mają dostęp do /api/me i /api/me/rezerwacje.
 
-### 🖥️ **Frontend Technologie:**
+## 🖥️ **Frontend Technologie:**
 
       React
       React Router
@@ -96,7 +96,7 @@
             profil użytkownika.
 
 
-### 🔧**Backend Technologie:**
+## 🔧**Backend Technologie:**
 
       Node.js
       Express
@@ -105,7 +105,7 @@
       bcrypt
       JWT
 
-### **Główne endpointy:**
+## **Główne endpointy:**
 
       POST   /api/auth/register
       POST   /api/auth/login
@@ -118,7 +118,7 @@
       GET    /api/me
       PUT    /api/me
 
-### ⚙️ **Instalacja lokalna**
+## ⚙️ **Instalacja lokalna**
 
       Backend
             cd backend
