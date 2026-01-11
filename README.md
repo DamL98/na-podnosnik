@@ -133,3 +133,19 @@ http://localhost:5173*
 
 *API backendu:
 http://localhost:3001*
+
+## PostgreSQL
+### Lista tabel
+![ListaTabel](db-screenshots/ListaTabel.png)
+
+### Users
+![Users](db-screenshots/Users.png)
+
+### Rezerwacja
+![Rezerwacja](db-screenshots/Rezerwacja.png)
+
+### Sesje
+![Sesje](db-screenshots/Sesje.png)
+
+### Podnośniki
+![Podnosniki](db-screenshots/Podnosniki.png)
