@@ -21,15 +21,15 @@ export default function Reservation() {
   const { user } = useAuth();
   const navigate = useNavigate();
 
-  const [form, setForm] = useState({
-    podnosnikId: 1,
-    firstName: "",
-    lastName: "",
-    email: "",
-    paymentMethod: "",
-    startAt: "",
-    endAt: "",
-  });
+  //const [form, setForm] = useState({
+  //  podnosnikId: 1,
+  //  firstName: "",
+  //  lastName: "",
+  //  email: "",
+  //  paymentMethod: "",
+  //  startAt: "",
+  //  endAt: "",
+  //});
 
   const [touched, setTouched] = useState({});
   const [loading, setLoading] = useState(false);
