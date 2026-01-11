@@ -11,17 +11,17 @@
 
 ## System umożliwia:
 
--tworzenie rezerwacji jako gość,
--założenie konta w trakcie rezerwacji,
--zarządzanie własnymi rezerwacjami po zalogowaniu,
--edycję danych profilu użytkownika.
+- tworzenie rezerwacji jako gość,
+- założenie konta w trakcie rezerwacji,
+- zarządzanie własnymi rezerwacjami po zalogowaniu,
+- edycję danych profilu użytkownika.
       
-### Aplikacja składa się z:
+## Aplikacja składa się z:
 - frontend: React (SPA),
 - backend: Node.js + Express,
 - baza danych: PostgreSQL (Prisma ORM).
 
-### 🎯 Główne funkcjonalności
+## 🎯 Główne funkcjonalności
 
 *Rezerwacje*
 - wybór zakresu dat i godzin,
@@ -95,12 +95,12 @@
 
 
 ## 🔧**Backend Technologie:**
-      Node.js
-      Express
-      Prisma
-      PostgreSQL
-      bcrypt
-      JWT
+- Node.js
+- Express
+- Prisma
+- PostgreSQL
+- bcrypt
+- JWT
 
 ## **Główne endpointy:**
 
@@ -116,17 +116,16 @@
       PUT    /api/me
 
 ## ⚙️ **Instalacja lokalna**
-
-      Backend
-            cd backend
-            npm install
-            npx prisma migrate dev
-            npm run dev
+### Backend
+      cd backend
+      npm install
+      npx prisma migrate dev
+      npm run dev
       
-      Frontend
-            cd frontend
-            npm install
-            npm run dev
+### Frontend
+      cd frontend
+      npm install
+      npm run dev
 
 
 *Aplikacja frontendowa:
