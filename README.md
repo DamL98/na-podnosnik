@@ -1,7 +1,9 @@
-🛠️ #Na Podnośnik — System Rezerwacji Warsztatu Samoobsługowego
+🛠️ Na Podnośnik — System Rezerwacji Warsztatu Samoobsługowego
 
 ***Tablica Kanban:** https://trello.com/b/GI6MYXNN/pbl*
-***Video aplikacji:** https://drive.google.com/drive/folders/1QLhUJOOGh32pvv0GQUnnN3c4L74g3Nhy?usp=sharing*
+***Video aplikacji:** 
+https://drive.google.com/drive/folders/1QLhUJOOGh32pvv0GQUnnN3c4L74g3Nhy?usp=sharing*
+
 
 📌 **Opis projektu**
 *Na Podnośnik to aplikacja webowa umożliwiająca klientom rezerwację stanowisk warsztatowych (podnośników) wraz z dodatkowymi usługami (narzędzia, pomoc mechanika, diagnostyka itp.).*
