@@ -6,133 +6,73 @@ Na Podnośnik to aplikacja webowa umożliwiająca klientom rezerwację stanowisk
 
 System umożliwia:
 
-tworzenie rezerwacji jako gość,
-
-założenie konta w trakcie rezerwacji,
-
-zarządzanie własnymi rezerwacjami po zalogowaniu,
-
-edycję danych profilu użytkownika.
-
-Aplikacja składa się z:
-
-frontend: React (SPA),
-
-backend: Node.js + Express,
-
-baza danych: PostgreSQL (Prisma ORM).
+      tworzenie rezerwacji jako gość,
+      założenie konta w trakcie rezerwacji,
+      zarządzanie własnymi rezerwacjami po zalogowaniu,
+      edycję danych profilu użytkownika.
+      Aplikacja składa się z:
+      frontend: React (SPA),
+      backend: Node.js + Express,
+      baza danych: PostgreSQL (Prisma ORM).
 
 🎯 Główne funkcjonalności
-Rezerwacje
 
-      wybór zakresu dat i godzin,
-      
-      automatyczne sprawdzanie dostępności stanowisk,
-      
-      wybór usług dodatkowych (rozliczanych godzinowo lub ryczałtowo),
-      
-      obliczanie kosztu,
-      
-      zapis rezerwacji dla:
-      
-      gościa,
-      
-      użytkownika zalogowanego.
-      
+      Rezerwacje
+            wybór zakresu dat i godzin,
+            automatyczne sprawdzanie dostępności stanowisk,
+            wybór usług dodatkowych (rozliczanych godzinowo lub ryczałtowo),
+            obliczanie kosztu,
+            
+            zapis rezerwacji dla:
+                  gościa,
+                  użytkownika zalogowanego.
+            
       Użytkownicy
-      
-      rejestracja i logowanie,
-      
-      sesje JWT przechowywane w bazie,
-      
-      konto tworzone automatycznie przy rezerwacji,
-      
-      profil użytkownika (imię, nazwisko, telefon),
-      
-      dashboard z listą własnych rezerwacji.
+            rejestracja i logowanie,
+            sesje JWT przechowywane w bazie,
+            konto tworzone automatycznie przy rezerwacji,
+            profil użytkownika (imię, nazwisko, telefon),
+            dashboard z listą własnych rezerwacji.
       
       Panel użytkownika
-      
-      lista wszystkich rezerwacji,
-      
-      podgląd usług, godzin i kosztów,
-      
-      informacja o metodzie płatności.
-
-🧱 Architektura
-[ React SPA ]
-      |
-      |  REST API
-      v
-[ Express.js ]
-      |
-      v
-[ Prisma ORM ]
-      |
-      v
-[ PostgreSQL ]
-
+            lista wszystkich rezerwacji,
+            podgląd usług, godzin i kosztów,
+            informacja o metodzie płatności.
 
 Frontend komunikuje się z backendem przez REST API, a uwierzytelnianie odbywa się za pomocą tokenów JWT przechowywanych w tabeli session.
 
 🗃️ Model danych (uproszczony)
-User
-
-id
-
-email
-
-password (hash bcrypt)
-
-firstName
-
-lastName
-
-phone
-
-Rezerwacja
-
-id
-
-userId (nullable)
-
-podnosnikId
-
-imie
-
-nazwisko
-
-email
-
-od_ts
-
-do_ts
-
-sposob_platnosci
-
-uslugi_json
-
-Session
-
-token
-
-userId
-
-expiresAt
+      [User]
+            id
+            email
+            password (hash bcrypt)
+            firstName
+            lastName
+            phone
+      
+      [Rezerwacja]
+            id
+            userId (nullable)
+            podnosnikId
+            imie
+            nazwisko
+            email
+            od_ts
+            do_ts
+            sposob_platnosci
+            uslugi_json
+      
+      [Session]
+            token
+            userId
+            expiresAt
 
 🔐 Autoryzacja
-
-System korzysta z:
-
-JWT tokenów
-
-middleware auth i authOptional
-
-Dzięki temu:
-
-goście mogą tworzyć rezerwacje,
-
-zalogowani użytkownicy mają dostęp do /api/me i /api/me/rezerwacje.
+      JWT tokenów
+      middleware auth i authOptional
+      Dzięki temu:
+            goście mogą tworzyć rezerwacje,
+            zalogowani użytkownicy mają dostęp do /api/me i /api/me/rezerwacje.
 
 🖥️ Frontend
 Technologie:
