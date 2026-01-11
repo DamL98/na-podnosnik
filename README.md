@@ -5,10 +5,10 @@
 [Video aplikacji](https://drive.google.com/drive/folders/1QLhUJOOGh32pvv0GQUnnN3c4L74g3Nhy?usp=sharing)
 
 
-📌 **Opis projektu**
+## 📌 **Opis projektu**
 *Na Podnośnik to aplikacja webowa umożliwiająca klientom rezerwację stanowisk warsztatowych (podnośników) wraz z dodatkowymi usługami (narzędzia, pomoc mechanika, diagnostyka itp.).*
 
-**System umożliwia:**
+### **System umożliwia:**
 
       - tworzenie rezerwacji jako gość,
       - założenie konta w trakcie rezerwacji,
@@ -20,7 +20,7 @@
             backend: Node.js + Express,
             baza danych: PostgreSQL (Prisma ORM).
 
-🎯 **Główne funkcjonalności**
+### 🎯 **Główne funkcjonalności**
 
       *Rezerwacje*
             wybór zakresu dat i godzin,
@@ -46,7 +46,7 @@
 
 *Frontend komunikuje się z backendem przez REST API, a uwierzytelnianie odbywa się za pomocą tokenów JWT przechowywanych w tabeli session*
 
-🗃️ **Model danych (uproszczony)**
+### 🗃️ **Model danych (uproszczony)**
 
       [User]
             id
