@@ -143,21 +143,25 @@ http://localhost:3001*
 </details>
 
 <details>
+<summary>Users</summary>
 ### Users
 ![Users](db-screenshots/Users.png)
 </details>
 
 <details>
+<summary>Rezerwacja</summary>
 ### Rezerwacja
 ![Rezerwacja](db-screenshots/Rezerwacja.png)
 </details>
 
 <details>
+<summary>Sesje</summary>
 ### Sesje
 ![Sesje](db-screenshots/Sesje.png)
 </details>
 
 <details>
+<summary>Podnośniki</summary>
 ### Podnośniki
 ![Podnosniki](db-screenshots/Podnosniki.png)
 </details>
