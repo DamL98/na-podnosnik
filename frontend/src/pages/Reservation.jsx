@@ -21,9 +21,15 @@ export default function Reservation() {
   const { user } = useAuth();
   const navigate = useNavigate();
 
-  const [selected, setSelected] = useState([]);
-  const [availablePodnosniki, setAvailablePodnosniki] = useState([]);
-  const [podnosniki, setPodnosniki] = useState([]);
+  const [form, setForm] = useState({
+    podnosnikId: 1,
+    firstName: "",
+    lastName: "",
+    email: "",
+    paymentMethod: "",
+    startAt: "",
+    endAt: "",
+  });
 
   const [touched, setTouched] = useState({});
   const [loading, setLoading] = useState(false);
@@ -65,15 +71,10 @@ export default function Reservation() {
     new Date(form.startAt) < new Date(form.endAt);
 
   const isValid = {
-    // firstName: form.firstName.trim().length > 0,
-    // lastName: form.lastName.trim().length > 0,
-    // email: form.email.includes("@"),
-
-    firstName: user ? true : form.firstName.trim().length > 0,
-    lastName: user ? true : form.lastName.trim().length > 0,
-    email: user ? true : form.email.includes("@"),
-
-
+    firstName: form.firstName.trim().length > 0,
+    lastName: form.lastName.trim().length > 0,
+    email: form.email.includes("@"),
+    paymentMethod: ["karta", "gotowka"].includes(form.paymentMethod),
     startAt: validRange,
     endAt: validRange,
     services: selected.length > 0,
@@ -112,6 +113,7 @@ export default function Reservation() {
   function handleChange(e) {
     const updated = { ...form, [e.target.name]: e.target.value };
     setForm(updated);
+
     setTouched((t) => ({ ...t, [e.target.name]: true }));
 
     if (
@@ -330,38 +332,26 @@ export default function Reservation() {
             className={fieldClass("endAt")}
           />
           
-
-          {form.startAt && form.endAt && (
-            availablePodnosniki.some(p => p.id === form.podnosnikId) ? (
-              <p className="valid-text">Termin dostępny</p>
-            ) : (
-              <p className="invalid-text">Wybrany podnośnik jest zajęty</p>
-            )
+          {/* Termin dostepny / zajety */}
+          {availability !== null && (
+            <p className={availability ? "valid-text" : "invalid-text"}>
+              {availability ? "Termin dostępny" : "Termin zajęty"}
+            </p>
           )}
 
-          <h3 className="h3-reservation-tittle">Stanowisko</h3>
-                {!form.startAt || !form.endAt ? (
-                  <p className="hint-text">Wybierz zakres daty</p>
-                ) : availablePodnosniki.length === 0 ? (
-                  <p className="invalid-text">Brak wolnych stanowisk w tym terminie</p>
-                ) : (
-                  <select
-                    value={form.podnosnikId || ""}
-                    onChange={e =>
-                      setForm(f => ({ ...f, podnosnikId: Number(e.target.value) }))
-                    }
-                    className="stanowisko-option"
-                  >
-                    {availablePodnosniki.map(p => (
-                      <option key={p.id} value={p.id}>
-                        {p.nazwa}
-                      </option>
-                    ))}
-                  </select>
-                )}
+          <h3>Płatność</h3>
+          <select
+            name="paymentMethod"
+            value={form.paymentMethod}
+            onChange={handleChange}
+            className={`payment-method ${fieldClass("paymentMethod")}`}
+          >
+            <option value="">Wybierz metodę płatności</option>
+            <option value="karta">Karta</option>
+            <option value="gotowka">Gotówka</option>
+          </select>
 
-
-          <h3 className="h3-reservation-tittle">Usługi</h3>
+          <h3>Usługi</h3>
           <div className="services-list">
             {services.map((s) => (
               <label
@@ -369,8 +359,6 @@ export default function Reservation() {
                 className={`service-option ${
                   selected.includes(s.id)
                     ? "valid"
-                    // : touched.services
-                    // ? "invalid"
                     : ""
                 }`}
               >

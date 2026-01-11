@@ -636,7 +636,19 @@ input[type="checkbox"] {
   color: white;
 }
 
-
+.payment-method{
+  display: grid;
+  grid-template-columns: 24px 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+  text-align: center;
+}
 
 /* Rezerwacje -> walidacja inputow */
 input.valid,
