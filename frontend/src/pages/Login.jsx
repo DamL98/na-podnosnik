@@ -63,16 +63,6 @@ export default function Login() {
       <p style={{ marginTop: 16 }}>
         Nie masz konta? <Link to="/register">Załóż konto</Link>
       </p>
-
-      {/* OAuth (na razie jako linki – backend dodamy później) */}
-      <div style={{ marginTop: 24, display: "grid", gap: 12 }}>
-        <a className="btn-secondary" href="http://localhost:3001/api/auth/google">
-          Zaloguj przez Google
-        </a>
-        <a className="btn-secondary" href="http://localhost:3001/api/auth/github">
-          Zaloguj przez GitHub
-        </a>
-      </div>
     </section>
   );
 }

@@ -14,7 +14,7 @@ export default function Footer() {
           <h4>Kontakt</h4>
           <p>📞 <a href="tel:+48123123123">+48 668 535 243</a></p>
           <p>✉️ <a href="mailto:kontakt@napodnosnik.pl">kontakt@napodnosnik.pl</a></p>
-          <p>📍 ul. Jackowskiego 12, 86-300 Grudziąc</p>
+          <p>📍 ul. Jackowskiego 12, 86-300 Grudziądz</p>
         </div>
 
         <div>
